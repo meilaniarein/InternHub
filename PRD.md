@@ -140,72 +140,81 @@ The following capabilities are excluded from the initial MVP unless they are exp
 6. Automated interview scheduling with companies.
 7. Advanced analytics and personalized career prediction.
 
+
 ## 7. Functional Requirements
 
 ### FR-01: Internship Listings
 
-The system shall display a list of internship opportunities with relevant information, such as position title, company name, location, and other available vacancy details.
+The system shall display a list of internship opportunities on the FieldInternship page. Each listing shall present the available vacancy information and provide access to its detail page.
 
 ### FR-02: Search and Filtering
 
-The system shall provide search and filtering controls to help users narrow down internship opportunities based on the criteria supported by the application.
+The system shall provide search and filtering controls on the internship listings page. Users shall be able to interact with these controls to find relevant internship opportunities.
 
 ### FR-03: Internship Details
 
-The system shall provide a detail page for a selected internship containing the available vacancy information.
+The system shall provide a DetailLowongan page that displays information about a selected internship. Users shall be able to access the page from the internship listings.
 
 ### FR-04: Saved Internships
 
-The system shall provide a dedicated page for viewing saved internship opportunities. If persistent saving is required, the application must support an appropriate data storage mechanism.
+The system shall provide a save action for internship opportunities and a dedicated Saved page where users can review saved internships. The saving behavior shall follow the functionality implemented in the current application.
 
 ### FR-05: Application Tracking
 
-The system shall provide an application overview containing available internship application records and their statuses. Automatic status updates must not be assumed unless the relevant functionality is implemented.
+The system shall provide an Applications page that displays available internship application records and their statuses. The page shall present the information supported by the current implementation.
 
 ### FR-06: Internship Resources
 
-The system shall provide access to internship-related resources that help students prepare for applications.
+The system shall provide a Resources page containing internship-related preparation information and working links to the available resources.
 
 ### FR-07: Navigation
 
-The system shall provide navigation links between the homepage, internship listings, internship details, saved internships, applications, and resources pages.
+The system shall provide navigation between the homepage, internship listings, internship details, saved internships, applications, and resources. Navigation links shall point to the correct existing HTML pages.
+
 
 ## 8. Acceptance Criteria
 
 ### AC-01: Internship Listings
-- Users can access the internship listings page.
-- Available internship opportunities are displayed in a readable format.
-- Each listing provides a way to access its details.
+
+- Users can open the FieldInternship page.
+- Internship listings are displayed in a readable format.
+- Users can access the detail page from a listing.
 
 ### AC-02: Search and Filtering
-- Users can enter a search query.
+
+- Users can interact with the search field.
 - Users can interact with the available filtering controls.
-- The displayed results reflect the search and filtering criteria when the functionality is implemented.
+- Search and filtering can be used to find relevant internship opportunities.
 
 ### AC-03: Internship Details
-- Users can open a selected internship's detail page.
-- The page displays the available information for that internship.
-- Users can navigate back to the internship discovery experience.
+
+- Users can open the DetailLowongan page from an internship listing.
+- The detail page displays the available vacancy information.
+- Users can navigate between the detail page and the internship discovery experience.
 
 ### AC-04: Saved Internships
-- Users can access the Saved page.
-- Saved internship records are displayed when available.
-- Persistence across page reloads must be verified if persistent saving is part of the implementation.
+
+- Users can interact with the save action on an internship.
+- Users can open the Saved page.
+- The Saved page behaves according to the saving functionality implemented in the application.
 
 ### AC-05: Application Tracking
-- Users can access the Applications page.
-- Available application records and statuses are displayed clearly.
-- Status changes are only considered supported if the application provides the relevant functionality.
+
+- Users can open the Applications page.
+- Available application records and statuses are presented clearly.
+- The displayed information reflects the current implementation.
 
 ### AC-06: Internship Resources
-- Users can access the Resources page.
+
+- Users can open the Resources page.
 - Available resources are presented clearly.
-- Users can open the relevant resource when a destination or content link is provided.
+- Resource links can be opened successfully.
 
 ### AC-07: Navigation
-- Users can navigate between the main application pages using the available navigation elements.
-- Navigation links point to the correct existing pages.
-- Page links work with the actual filenames and their capitalization.
+
+- Users can navigate between the main InternHub pages.
+- Navigation links lead to the correct existing HTML pages.
+- Links work with the actual filenames and capitalization used in the project.
 
 ## 9. Non-Functional Requirements
 
@@ -234,16 +243,19 @@ The web pages should be tested in a modern web browser to verify that their cont
 
 ## 11. Success Criteria
 
-The initial product can be evaluated using the following criteria:
+## 11. Success Criteria
 
-1. Users can access and navigate all main InternHub pages.
-2. Users can discover internship listings and open vacancy details.
-3. Users can use the available search and filtering controls.
-4. Users can access saved internship and application overview pages.
-5. Users can access internship preparation resources.
-6. The implemented features behave consistently with their documented requirements.
+The initial InternHub MVP is considered to meet its functional objectives when:
 
-Quantitative performance targets should be defined after usability testing or user feedback is collected.
+1. Users can access the internship listings and view available vacancies.
+2. Users can use the available search and filtering controls.
+3. Users can open internship detail pages from the listings.
+4. Users can use the save action and access the Saved page.
+5. Users can access application records and their displayed statuses.
+6. Users can access internship preparation resources and open the available links.
+7. Users can navigate between the main application pages without incorrect page links.
+
+The initial functional checks have been performed in a browser. Further testing may be needed to evaluate data persistence, usability, accessibility, and behavior across different browsers.
 
 ## 12. Future Enhancements
 
@@ -255,3 +267,8 @@ Potential improvements for future versions include:
 4. Personalized internship recommendations.
 5. Integration with external internship platforms.
 6. Additional career development and interview preparation resources.
+
+## 13. Project References
+
+- **GitHub Repository:** https://github.com/meilaniarein/InternHub
+- **Figma Design (Module 5):** https://www.figma.com/design/283K7KBUuAI0ZfnS6iv9dF/INTERN-HUB?node-id=34-2&t=s6F7hiObt468E5yn-1
