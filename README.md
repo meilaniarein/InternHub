@@ -69,3 +69,17 @@ The generated output should be reviewed and adjusted manually to ensure that the
 ## Project Repository
 
 https://github.com/meilaniarein/InternHub
+
+## Feature Verification
+
+The following features have been tested in the browser:
+
+- **Internship Listings:** Internship vacancies are displayed on `FieldInternship.html`.
+- **Search and Filters:** Search and filtering controls can be used.
+- **Internship Details:** Selecting a vacancy opens `DetailLowongan.html`.
+- **Saved Internships:** The save button and `Saved.html` page work as expected.
+- **Applications:** `Applications.html` displays application records and statuses.
+- **Resources:** `Resources.html` and its available links can be accessed.
+- **Page Navigation:** Navigation menus and buttons lead to the correct pages.
+
+Verification was performed through browser testing. This confirms the observed behavior during testing and does not necessarily indicate persistent backend storage. 
