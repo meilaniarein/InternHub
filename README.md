@@ -50,7 +50,15 @@ Students often struggle to find internship opportunities because vacancy informa
 
 ## Design
 
-Figma prototype: [Insert your Figma link here]
+Figma prototype: https://www.figma.com/design/283K7KBUuAI0ZfnS6iv9dF/INTERN-HUB?node-id=34-2&t=s6F7hiObt468E5yn-1 
+
+## Contributions
+
+- Designed the InternHub user interface and user flow in Figma.
+- Developed the HTML pages based on the project design.
+- Organized image and icon assets.
+- Tested page navigation and HTML validity.
+- Prepared the PRD and documented AI prompts and manual improvements.
 
 ## AI Usage and Manual Improvements
 
