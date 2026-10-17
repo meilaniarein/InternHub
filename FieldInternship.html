@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cari dan filter peluang magang berdasarkan posisi, lokasi, tipe kerja, durasi, dan status lowongan di InternHub.">
+    <title>Field Internship - InternHub</title>
+</head>
+<body>
+    <header>
+        <nav aria-label="Navigasi utama">
+            <a href="branda.html" aria-label="InternHub Home">
+                <img
+                    src="./assets/images/Icon-InternHub.svg"
+                    alt="InternHub"
+                    width="120"
+                >
+            </a>
+
+            <ul>
+                <li>
+                    <a href="FieldInternship.html" aria-current="page">
+                        Field Internship
+                    </a>
+                </li>
+                <li><a href="saved.html">Saved</a></li>
+                <li><a href="applications.html">Application</a></li>
+                <li><a href="resources.html">Resources</a></li>
+            </ul>
+
+            <a href="profile.html" aria-label="Profil pengguna">
+                <img
+                    src="./assets/images/Gambar-FotoPersona.png"
+                    alt="Foto profil pengguna"
+                    width="48"
+                    height="48"
+                >
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <aside aria-labelledby="filter-title">
+            <h1 id="filter-title">Filters</h1>
+
+            <a href="FieldInternship.html">Reset</a>
+
+            <form action="FieldInternship.html" method="get">
+                <fieldset>
+                    <legend>Position</legend>
+
+                    <input type="checkbox" id="uiux" name="position" value="UI/UX Designer">
+                    <label for="uiux">UI/UX Designer</label>
+                    <br>
+
+                    <input type="checkbox" id="product-designer" name="position" value="Product Designer">
+                    <label for="product-designer">Product Designer</label>
+                    <br>
+
+                    <input type="checkbox" id="frontend" name="position" value="Frontend Developer">
+                    <label for="frontend">Frontend Developer</label>
+                    <br>
+
+                    <input type="checkbox" id="marketing" name="position" value="Marketing">
+                    <label for="marketing">Marketing</label>
+                    <br>
+
+                    <input type="checkbox" id="data-analyst" name="position" value="Data Analyst">
+                    <label for="data-analyst">Data Analyst</label>
+                    <br>
+
+                    <details>
+                        <summary>See more</summary>
+
+                        <input type="checkbox" id="business-analyst" name="position" value="Business Analyst">
+                        <label for="business-analyst">Business Analyst</label>
+                        <br>
+
+                        <input type="checkbox" id="software-engineer" name="position" value="Software Engineer">
+                        <label for="software-engineer">Software Engineer</label>
+                    </details>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Location</legend>
+
+                    <label for="location">Choose location</label>
+
+                    <select id="location" name="location">
+                        <option value="">All locations</option>
+                        <option value="Jakarta">Jakarta</option>
+                        <option value="Bekasi">Bekasi</option>
+                        <option value="Bandung">Bandung</option>
+                        <option value="Tangerang">Tangerang</option>
+                        <option value="Remote">Remote</option>
+                    </select>
+
+                    <img
+                        src="./assets/images/Icon-DropDown.svg"
+                        alt=""
+                        width="16"
+                        height="16"
+                    >
+                </fieldset>
+
+                <fieldset>
+                    <legend>Work Type</legend>
+
+                    <input type="checkbox" id="onsite" name="work-type" value="On-site">
+                    <label for="onsite">On-site</label>
+                    <br>
+
+                    <input type="checkbox" id="hybrid" name="work-type" value="Hybrid">
+                    <label for="hybrid">Hybrid</label>
+                    <br>
+
+                    <input type="checkbox" id="remote" name="work-type" value="Remote">
+                    <label for="remote">Remote</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Duration</legend>
+
+                    <label for="duration">Choose duration</label>
+
+                    <select id="duration" name="duration">
+                        <option value="">Any duration</option>
+                        <option value="less-than-3">Less than 3 months</option>
+                        <option value="3-6">3–6 months</option>
+                        <option value="more-than-6">More than 6 months</option>
+                    </select>
+
+                    <img
+                        src="./assets/images/Icon-DropDown.svg"
+                        alt=""
+                        width="16"
+                        height="16"
+                    >
+                </fieldset>
+
+                <fieldset>
+                    <legend>Status</legend>
+
+                    <input type="checkbox" id="open" name="status" value="Open">
+                    <label for="open">Open</label>
+                    <br>
+
+                    <input type="checkbox" id="closing-soon" name="status" value="Closing Soon">
+                    <label for="closing-soon">Closing Soon</label>
+                </fieldset>
+
+                <button type="reset">Reset Filters</button>
+                <button type="submit">Apply Filters</button>
+            </form>
+        </aside>
+
+        <section aria-labelledby="internship-title">
+            <h1 id="internship-title">Find Your Internship</h1>
+
+            <form action="FieldInternship.html" method="get">
+                <label for="keyword">Search internship</label>
+
+                <input
+                    type="search"
+                    id="keyword"
+                    name="keyword"
+                    placeholder="Search position, company, or keyword..."
+                >
+
+                <button type="submit" aria-label="Search internships">
+                    <img
+                        src="./assets/images/Icon-Search.svg"
+                        alt=""
+                        width="24"
+                        height="24"
+                    >
+                </button>
+            </form>
+
+            <p><strong>124 internships found</strong></p>
+
+            <form action="FieldInternship.html" method="get">
+                <label for="sort">Sort by</label>
+
+                <select id="sort" name="sort">
+                    <option value="relevant">Most Relevant</option>
+                    <option value="newest">Newest</option>
+                    <option value="deadline">Nearest Deadline</option>
+                </select>
+
+                <img
+                    src="./assets/images/Icon-DropDown.svg"
+                    alt=""
+                    width="16"
+                    height="16"
+                >
+
+                <button type="submit">Sort</button>
+            </form>
+
+            <article>
+                <img
+                    src="./assets/images/Gambar-TechCo.png"
+                    alt="Logo TechCo"
+                    width="176"
+                >
+
+                <h2>UI/UX Design Intern</h2>
+                <p>TechCo</p>
+
+                <ul>
+                    <li>
+                        <img
+                            src="./assets/images/Icon-Lokasi.svg"
+                            alt=""
+                            width="20"
+                            height="20"
+                        >
+                        Jakarta
+                    </li>
+                    <li>
+                        <img
+                            src="./assets/images/Icon-ModelKerja.svg"
+                            alt=""
+                            width="20"
+                            height="20"
+                        >
+                        Hybrid
+                    </li>
+                    <li>
+                        <img
+                            src="./assets/images/Icon-Durasi.svg"
+                            alt=""
+                            width="20"
+                            height="20"
+                        >
+                        3–6 months
+                    </li>
+                </ul>
+
+                <p><strong>Open</strong></p>
+                <p>Deadline 30 Oct 2026</p>
+
+                <a href="internship-detail.html">View Details</a>
+
+                <form action="saved.html" method="get">
+                    <button
+                        type="submit"
+                        name="save"
+                        value="techco-uiux"
+                        aria-label="Save internship at TechCo"
+                    >
+                        <img
+                            src="./assets/images/Icon-SaveInternship.svg"
+                            alt=""
+                            width="24"
+                            height="24"
+                        >
+                    </button>
+                </form>
+            </article>
+
+            <article>
+                <img
+                    src="./assets/images/Gambar-AeroLabs.png"
+                    alt="Logo AeroLabs"
+                    width="176"
+                >
+
+                <h2>UI/UX Design Intern</h2>
+                <p>AeroLabs</p>
+
+                <ul>
+                    <li>
+                        <img
+                            src="./assets/images/Icon-Lokasi.svg"
+                            alt=""
+                            width="20"
+                            height="20"
+                        >
+                        Jakarta
+                    </li>
+                    <li>
+                        <img
+                            src="./assets/images/Icon-ModelKerja.svg"
+                            alt=""
+                            width="20"
+                            height="20"
+                        >
+                        Hybrid
+                    </li>
+                    <li>
+                        <img
+                            src="./assets/images/Icon-Durasi.svg"
+                            alt=""
+                            width="20"
+                            height="20"
+                        >
+                        3–6 months
+                    </li>
+                </ul>
+
+                <p><strong>Open</strong></p>
+                <p>Deadline 30 Nov 2026</p>
+
+                <a href="internship-detail.html">View Details</a>
+
+                <form action="saved.html" method="get">
+                    <button
+                        type="submit"
+                        name="save"
+                        value="aerolabs-uiux"
+                        aria-label="Save internship at AeroLabs"
+                    >
+                        <img
+                            src="./assets/images/Icon-SaveInternship.svg"
+                            alt=""
+                            width="24"
+                            height="24"
+                        >
+                    </button>
+                </form>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 InternHub. All rights reserved.</p>
+    </footer>
+</body>
+</html>

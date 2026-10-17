@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Periksa ringkasan lamaran sebelum dikirim.">
+    <title>Review &amp; Submit - InternHub</title>
+</head>
+<body>
+    <header>
+        <nav aria-label="Navigasi halaman">
+            <a href="ApplicationStep2.html">
+                <img src="./assets/images/Icon-Back.svg" alt="" width="24" height="24">
+                Back
+            </a>
+
+            <a href="profile.html" aria-label="Profil pengguna">
+                <img src="./assets/images/Gambar-FotoPersona.png" alt="Foto profil pengguna" width="48" height="48">
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <section aria-label="Progress lamaran">
+            <div>
+                <img src="./assets/images/Icon-1.svg" alt="" width="48" height="48">
+                <p>Personal Information</p>
+            </div>
+            <div>
+                <img src="./assets/images/Icon-2.svg" alt="" width="48" height="48">
+                <p>Application Detail</p>
+            </div>
+            <div aria-current="step">
+                <img src="./assets/images/Icon-3.svg" alt="" width="48" height="48">
+                <p><strong>Review &amp; Submit</strong></p>
+            </div>
+        </section>
+
+        <section aria-labelledby="review-title">
+            <h1 id="review-title">Review Your Application</h1>
+            <p>Pastikan semua informasi sudah benar sebelum dikirim.</p>
+
+            <article>
+                <header>
+                    <img src="./assets/images/Gambar-TechCo.png" alt="Logo TechCo" width="112">
+                    <h2>UI/UX Design Intern</h2>
+                    <p>TechCo</p>
+                    <ul>
+                        <li>Jakarta</li>
+                        <li>Hybrid</li>
+                        <li>3–6 months</li>
+                    </ul>
+                </header>
+
+                <section aria-labelledby="personal-summary">
+                    <h3 id="personal-summary">Personal Information</h3>
+                    <p>Pastikan data diri yang kamu masukkan sudah benar.</p>
+                    <a href="ApplicationStep1.html">Edit Personal Information</a>
+                </section>
+
+                <section aria-labelledby="document-summary">
+                    <h3 id="document-summary">Document</h3>
+
+                    <p>
+                        <img src="./assets/images/Icon-Dokumen.svg" alt="" width="24" height="24">
+                        CV / Resume
+                    </p>
+
+                    <p>Dokumen lamaran yang telah kamu pilih.</p>
+                    <a href="ApplicationStep2.html">Edit Documents</a>
+                </section>
+            </article>
+
+            <p>
+                <a href="ApplicationError.html">Preview Error Page</a>
+            </p>
+
+            <form action="ApplicationSuccess.html" method="get">
+                <button type="submit">Submit Application</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

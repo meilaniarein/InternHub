@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lengkapi dokumen lamaran magang di InternHub.">
+    <title>Application Details - InternHub</title>
+</head>
+<body>
+    <header>
+        <nav aria-label="Navigasi halaman">
+            <a href="ApplicationStep1.html">
+                <img src="./assets/images/Icon-Back.svg" alt="" width="24" height="24">
+                Back
+            </a>
+
+            <a href="profile.html" aria-label="Profil pengguna">
+                <img src="./assets/images/Gambar-FotoPersona.png" alt="Foto profil pengguna" width="48" height="48">
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <section aria-label="Progress lamaran">
+            <div>
+                <img src="./assets/images/Icon-1.svg" alt="" width="48" height="48">
+                <p>Personal Information</p>
+            </div>
+            <div aria-current="step">
+                <img src="./assets/images/Icon-2.svg" alt="" width="48" height="48">
+                <p><strong>Application Detail</strong></p>
+            </div>
+            <div>
+                <img src="./assets/images/Icon-3.svg" alt="" width="48" height="48">
+                <p>Review &amp; Submit</p>
+            </div>
+        </section>
+
+        <section aria-labelledby="details-title">
+            <h1 id="details-title">Application Details</h1>
+            <p>Lengkapi dokumen yang dibutuhkan.</p>
+
+            <form action="ApplicationReview.html" method="get">
+                <div>
+                    <label for="cv"><strong>CV / Resume</strong></label>
+
+                    <div>
+                        <label for="cv">
+                            <img src="./assets/images/Icon-DropFile.svg" alt="" width="32" height="32">
+                            <br>
+                            Drag and drop your file here or click to upload
+                            <br>
+                            PDF, DOC, DOCX (Max 5 MB)
+                        </label>
+
+                        <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
+                    </div>
+                </div>
+
+                <p>
+                    <label for="portfolio"><strong>Portfolio</strong></label><br>
+                    <input type="url" id="portfolio" name="portfolio" placeholder="Masukkan link portofolio">
+                </p>
+
+                <p>
+                    <label for="cover-letter"><strong>Cover Letter</strong></label><br>
+                    <textarea id="cover-letter" name="cover-letter" rows="4" cols="40" placeholder="Tuliskan cover letter kamu"></textarea>
+                </p>
+
+                <button type="submit">Save &amp; Continue ›</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
