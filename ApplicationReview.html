@@ -4,82 +4,637 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Periksa ringkasan lamaran sebelum dikirim.">
+    <meta name="description" content="Periksa ringkasan lamaran sebelum dikirim melalui InternHub.">
     <title>Review &amp; Submit - InternHub</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            color: #111;
+            background: #f5f6f8;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .browser-bar {
+            height: 42px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 20px;
+            background: #e5eaf2;
+        }
+
+        .browser-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+
+        .red { background: #f16d70; }
+        .yellow { background: #ffc252; }
+        .green { background: #71c987; }
+
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid #dedede;
+        }
+
+        .topbar-inner {
+            min-height: 80px;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 12px 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: #111;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .back-link img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .profile-link img {
+            display: block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .page {
+            max-width: 1440px;
+            min-height: calc(100vh - 122px);
+            margin: 0 auto;
+            padding: 48px 24px;
+            background: #fff;
+        }
+
+        .content {
+            max-width: 775px;
+            margin: 0 auto;
+        }
+
+        .progress {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin: 0 auto 56px;
+        }
+
+        .progress-step {
+            position: relative;
+            text-align: center;
+            color: #a5a9ad;
+        }
+
+        .progress-step:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            top: 23px;
+            left: calc(50% + 26px);
+            width: calc(100% - 52px);
+            height: 2px;
+            background: #d9d9d9;
+        }
+
+        .step-number {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            height: 46px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            color: #fff;
+            background: #9da1a4;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .progress-step.active {
+            color: #1760ff;
+        }
+
+        .progress-step.active .step-number {
+            background: #1760ff;
+        }
+
+        .step-label {
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .heading {
+            margin-bottom: 26px;
+        }
+
+        .heading h1 {
+            margin: 0 0 8px;
+            font-size: 32px;
+        }
+
+        .heading p {
+            margin: 0;
+            color: #858585;
+            font-size: 20px;
+            line-height: 1.5;
+        }
+
+        .summary-card {
+            border: 1px solid #dedede;
+            background: #fff;
+        }
+
+        .job-summary {
+            display: grid;
+            grid-template-columns: 140px minmax(0, 1fr) auto;
+            align-items: start;
+            gap: 20px;
+            padding: 20px;
+            border-bottom: 1px solid #dedede;
+        }
+
+        .company-logo {
+            display: block;
+            width: 140px;
+            height: 102px;
+            object-fit: contain;
+        }
+
+        .job-info h2 {
+            margin: 4px 0 10px;
+            font-size: 20px;
+        }
+
+        .company-name {
+            margin: 0 0 12px;
+            color: #858585;
+            font-size: 18px;
+        }
+
+        .job-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 18px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            color: #858585;
+            font-size: 16px;
+        }
+
+        .edit-link {
+            color: #111;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .edit-link:hover {
+            color: #1760ff;
+            text-decoration: underline;
+        }
+
+        .summary-section {
+            padding: 16px 20px;
+            border-bottom: 1px solid #dedede;
+        }
+
+        .summary-section:last-child {
+            border-bottom: none;
+        }
+
+        .summary-section h3 {
+            margin: 0 0 12px;
+            font-size: 18px;
+        }
+
+        .summary-list {
+            display: grid;
+            grid-template-columns: 38% minmax(0, 1fr);
+            gap: 10px 14px;
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.4;
+        }
+
+        .summary-list dt {
+            color: #858585;
+        }
+
+        .summary-list dd {
+            margin: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .document-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+            color: #858585;
+            font-size: 18px;
+            overflow-wrap: anywhere;
+        }
+
+        .document-name img {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+
+        .submit-button {
+            min-width: 250px;
+            min-height: 70px;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            background: #1760ff;
+            font-size: 19px;
+            cursor: pointer;
+        }
+
+        .submit-button:hover {
+            background: #084be0;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 8px;
+            background: #dcfce7;
+            color: #166534;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 650px) {
+            .topbar-inner {
+                padding: 12px 18px;
+            }
+
+            .page {
+                padding: 32px 16px;
+            }
+
+            .progress {
+                margin-bottom: 38px;
+            }
+
+            .step-label {
+                font-size: 13px;
+            }
+
+            .step-number {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 12px;
+                font-size: 18px;
+            }
+
+            .progress-step:not(:last-child)::after {
+                top: 19px;
+                left: calc(50% + 22px);
+                width: calc(100% - 44px);
+            }
+
+            .heading h1 {
+                font-size: 26px;
+            }
+
+            .heading p {
+                font-size: 16px;
+            }
+
+            .job-summary {
+                grid-template-columns: 90px minmax(0, 1fr);
+                gap: 14px;
+                padding: 14px;
+            }
+
+            .company-logo {
+                width: 90px;
+                height: 75px;
+            }
+
+            .job-info h2 {
+                font-size: 17px;
+            }
+
+            .company-name,
+            .job-meta {
+                font-size: 14px;
+            }
+
+            .edit-link {
+                grid-column: 2;
+                justify-self: start;
+                font-size: 16px;
+            }
+
+            .summary-section {
+                padding: 14px;
+            }
+
+            .summary-list {
+                grid-template-columns: 1fr;
+                gap: 4px;
+                font-size: 16px;
+            }
+
+            .summary-list dd {
+                margin-bottom: 8px;
+            }
+
+            .document-name {
+                font-size: 15px;
+            }
+
+            .actions {
+                justify-content: stretch;
+            }
+
+            .submit-button {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <header>
-        <nav aria-label="Navigasi halaman">
-            <a href="ApplicationStep2.html">
-                <img src="./assets/images/Icon-Back.svg" alt="" width="24" height="24">
-                Back
+    <div class="browser-bar" aria-hidden="true">
+        <span class="browser-dot red"></span>
+        <span class="browser-dot yellow"></span>
+        <span class="browser-dot green"></span>
+    </div>
+
+    <header class="topbar">
+        <nav class="topbar-inner" aria-label="Navigasi halaman review">
+            <a class="back-link" href="ApplicationStep2.html">
+                <img src="./assets/images/Icon-Back.svg" alt="">
+                <span>Back</span>
             </a>
 
-            <a href="profile.html" aria-label="Profil pengguna">
-                <img src="./assets/images/Gambar-FotoPersona.png" alt="Foto profil pengguna" width="48" height="48">
+            <a
+                class="profile-link"
+                href="Applications.html"
+                aria-label="Lihat aplikasi saya"
+            >
+                <img
+                    src="./assets/images/Gambar-FotoPersona.png"
+                    alt="Foto profil pengguna"
+                    width="50"
+                    height="50"
+                >
             </a>
         </nav>
     </header>
 
-    <main>
-        <section aria-label="Progress lamaran">
-            <div>
-                <img src="./assets/images/Icon-1.svg" alt="" width="48" height="48">
-                <p>Personal Information</p>
-            </div>
-            <div>
-                <img src="./assets/images/Icon-2.svg" alt="" width="48" height="48">
-                <p>Application Detail</p>
-            </div>
-            <div aria-current="step">
-                <img src="./assets/images/Icon-3.svg" alt="" width="48" height="48">
-                <p><strong>Review &amp; Submit</strong></p>
-            </div>
-        </section>
+    <main class="page">
+        <div class="content">
+            <section class="progress" aria-label="Progress lamaran">
+                <div class="progress-step">
+                    <div class="step-number">1</div>
+                    <p class="step-label">Personal Information</p>
+                </div>
 
-        <section aria-labelledby="review-title">
-            <h1 id="review-title">Review Your Application</h1>
-            <p>Pastikan semua informasi sudah benar sebelum dikirim.</p>
+                <div class="progress-step">
+                    <div class="step-number">2</div>
+                    <p class="step-label">Application Detail</p>
+                </div>
 
-            <article>
-                <header>
-                    <img src="./assets/images/Gambar-TechCo.png" alt="Logo TechCo" width="112">
-                    <h2>UI/UX Design Intern</h2>
-                    <p>TechCo</p>
-                    <ul>
-                        <li>Jakarta</li>
-                        <li>Hybrid</li>
-                        <li>3–6 months</li>
-                    </ul>
-                </header>
+                <div class="progress-step active" aria-current="step">
+                    <div class="step-number">3</div>
+                    <p class="step-label">Review &amp; Submit</p>
+                </div>
+            </section>
 
-                <section aria-labelledby="personal-summary">
-                    <h3 id="personal-summary">Personal Information</h3>
-                    <p>Pastikan data diri yang kamu masukkan sudah benar.</p>
-                    <a href="ApplicationStep1.html">Edit Personal Information</a>
-                </section>
+            <section aria-labelledby="review-title">
+                <div class="heading">
+                    <h1 id="review-title">Review Your Application</h1>
+                    <p>Pastikan semua informasi sudah benar sebelum dikirim.</p>
+                </div>
 
-                <section aria-labelledby="document-summary">
-                    <h3 id="document-summary">Document</h3>
+                <article class="summary-card">
+                    <header class="job-summary">
+                        <img
+                            class="company-logo"
+                            src="./assets/images/Gambar-TechCo.png"
+                            alt="Logo TechCo"
+                            width="140"
+                            height="102"
+                        >
 
-                    <p>
-                        <img src="./assets/images/Icon-Dokumen.svg" alt="" width="24" height="24">
-                        CV / Resume
-                    </p>
+                        <div class="job-info">
+                            <h2>UI/UX Design Intern</h2>
+                            <p class="company-name">TechCo</p>
 
-                    <p>Dokumen lamaran yang telah kamu pilih.</p>
-                    <a href="ApplicationStep2.html">Edit Documents</a>
-                </section>
-            </article>
+                            <ul class="job-meta">
+                                <li>♧ Jakarta</li>
+                                <li>▣ Hybrid</li>
+                                <li>▦ 3-6 months</li>
+                            </ul>
+                        </div>
 
-            <p>
-                <a href="ApplicationError.html">Preview Error Page</a>
-            </p>
+                        <a class="edit-link" href="DetailLowongan.html">
+                            Edit
+                        </a>
+                    </header>
 
-            <form action="ApplicationSuccess.html" method="get">
-                <button type="submit">Submit Application</button>
-            </form>
-        </section>
+                    <section
+                        class="summary-section"
+                        aria-labelledby="personal-summary"
+                    >
+                        <h3 id="personal-summary">Personal Information</h3>
+
+                        <dl class="summary-list">
+                            <dt>Nama</dt>
+                            <dd id="review-name">Belum diisi</dd>
+
+                            <dt>Email</dt>
+                            <dd id="review-email">Belum diisi</dd>
+
+                            <dt>Phone Number</dt>
+                            <dd id="review-phone">Belum diisi</dd>
+
+                            <dt>University</dt>
+                            <dd id="review-university">Belum diisi</dd>
+
+                            <dt>Major</dt>
+                            <dd id="review-major">Belum diisi</dd>
+
+                            <dt>Expected Graduation</dt>
+                            <dd id="review-graduation">Belum diisi</dd>
+                        </dl>
+
+                        <p>
+                            <a href="ApplicationStep1.html">
+                                Edit Personal Information
+                            </a>
+                        </p>
+                    </section>
+
+                    <section
+                        class="summary-section"
+                        aria-labelledby="document-summary"
+                    >
+                        <h3 id="document-summary">Document</h3>
+
+                        <p class="document-name">
+                            <img
+                                src="./assets/images/Icon-Dokumen.svg"
+                                alt=""
+                                width="24"
+                                height="24"
+                            >
+                            <span id="review-cv">Belum ada CV yang dipilih</span>
+                        </p>
+
+                        <p>
+                            <a href="ApplicationStep2.html">Edit Documents</a>
+                        </p>
+
+                        <div id="extra-documents" hidden>
+                            <p>
+                                <strong>Portfolio:</strong>
+                                <span id="review-portfolio">-</span>
+                            </p>
+
+                            <p>
+                                <strong>Cover Letter:</strong>
+                                <span id="review-cover-letter">-</span>
+                            </p>
+                        </div>
+                    </section>
+                </article>
+
+                <div class="actions">
+                    <button class="submit-button" id="submit-application" type="button">
+                        Submit Application
+                    </button>
+                </div>
+
+                <p class="message" id="submit-message" role="status" hidden>
+                    Simulasi pengiriman lamaran selesai.
+                </p>
+            </section>
+        </div>
     </main>
+
+    <script>
+        function readStoredObject(key) {
+            try {
+                return JSON.parse(sessionStorage.getItem(key) || "null");
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function displayValue(id, value) {
+            const element = document.getElementById(id);
+
+            if (typeof value === "string" && value.trim() !== "") {
+                element.textContent = value;
+            } else {
+                element.textContent = "Belum diisi";
+            }
+        }
+
+        /*
+         * Data hanya dapat ditampilkan jika ApplicationStep1.html
+         * menyimpan data dengan key yang sama.
+         */
+        const personalData =
+            readStoredObject("internhub-personal-information") ||
+            readStoredObject("internhub-personal-info") ||
+            readStoredObject("internhub-application-personal");
+
+        if (personalData) {
+            displayValue(
+                "review-name",
+                personalData.fullName || personalData.name
+            );
+
+            displayValue("review-email", personalData.email);
+            displayValue("review-phone", personalData.phone);
+
+            displayValue(
+                "review-university",
+                personalData.university
+            );
+
+            displayValue("review-major", personalData.major);
+
+            displayValue(
+                "review-graduation",
+                personalData.graduation || personalData.expectedGraduation
+            );
+        }
+
+        /*
+         * File yang dipilih pada input file tidak ikut tersimpan
+         * di sessionStorage. Nama file bisa ditampilkan jika Step 2
+         * menyimpan cvName, tetapi file aslinya tidak ikut dipindahkan.
+         */
+        const applicationDetails =
+            readStoredObject("internhub-application-details");
+
+        if (applicationDetails) {
+            displayValue("review-cv", applicationDetails.cvName);
+            displayValue("review-portfolio", applicationDetails.portfolio);
+            displayValue(
+                "review-cover-letter",
+                applicationDetails.coverLetter
+            );
+
+            document.getElementById("extra-documents").hidden = false;
+        }
+
+        document
+            .getElementById("submit-application")
+            .addEventListener("click", function () {
+                const message = document.getElementById("submit-message");
+
+                try {
+                    sessionStorage.setItem(
+                        "internhub-application-status",
+                        "Simulasi lamaran telah dikirim"
+                    );
+
+                    message.textContent =
+                        "Ini hanya simulasi. Belum ada lamaran yang dikirim ke perusahaan.";
+
+                    message.hidden = false;
+                } catch (error) {
+                    message.textContent =
+                        "Status simulasi tidak dapat disimpan di browser ini.";
+
+                    message.hidden = false;
+                }
+            });
+    </script>
 </body>
 </html>

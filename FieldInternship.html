@@ -4,89 +4,584 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Cari dan filter peluang magang berdasarkan posisi, lokasi, tipe kerja, durasi, dan status lowongan di InternHub.">
+    <meta name="description" content="Cari dan filter peluang magang di InternHub.">
     <title>Field Internship - InternHub</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #171717;
+            background: #f7f8fa;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button, input, select {
+            font: inherit;
+        }
+
+        .browser-strip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 42px;
+            padding: 0 20px;
+            background: #e6ebf3;
+        }
+
+        .browser-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .red { background: #f16d70; }
+        .yellow { background: #ffc252; }
+        .green { background: #71c987; }
+
+        .site-header {
+            background: white;
+            border-bottom: 1px solid #dedede;
+        }
+
+        .nav {
+            max-width: 1440px;
+            min-height: 78px;
+            margin: auto;
+            padding: 14px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand img {
+            display: block;
+            width: 120px;
+            height: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 42px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #777;
+        }
+
+        .nav-links a:hover,
+        .nav-links a[aria-current="page"] {
+            color: #1760f5;
+        }
+
+        .profile img {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .layout {
+            max-width: 1440px;
+            min-height: calc(100vh - 120px);
+            margin: auto;
+            display: grid;
+            grid-template-columns: 300px minmax(0, 1fr);
+            background: white;
+        }
+
+        .filters {
+            padding: 28px 24px;
+            border-right: 1px solid #dedede;
+        }
+
+        .filter-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .filter-heading h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .reset-link {
+            color: #1760f5;
+            border: none;
+            background: none;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .filter-group {
+            min-width: 0;
+            padding: 0 0 18px;
+            margin: 0 0 18px;
+            border: 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .filter-group legend {
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .check-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 12px 0;
+            color: #858585;
+            cursor: pointer;
+        }
+
+        .check-row input {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            accent-color: #1760f5;
+        }
+
+        .filter-group select {
+            width: 100%;
+            min-height: 40px;
+            padding: 8px 10px;
+            background: white;
+            border: 1px solid #d7d7d7;
+            border-radius: 6px;
+        }
+
+        details summary {
+            margin-top: 12px;
+            color: #1760f5;
+            cursor: pointer;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 26px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 11px 14px;
+            color: #171717;
+            background: white;
+            border: 1px solid #d8d8d8;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .button-primary {
+            color: white;
+            background: #1760f5;
+            border-color: #1760f5;
+        }
+
+        .filter-actions .button {
+            flex: 1;
+            padding: 11px 8px;
+        }
+
+        .results {
+            min-width: 0;
+            padding: 24px 34px 48px;
+        }
+
+        .search-form {
+            display: flex;
+            width: 100%;
+            min-height: 50px;
+            overflow: hidden;
+            background: white;
+            border: 1px solid #aaa;
+            border-radius: 8px;
+        }
+
+        .search-form label {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+        }
+
+        .search-form input {
+            flex: 1;
+            min-width: 0;
+            padding: 0 18px;
+            border: 0;
+            outline: none;
+        }
+
+        .search-form button {
+            width: 72px;
+            border: 0;
+            background: #1760f5;
+            cursor: pointer;
+        }
+
+        .search-form button img {
+            width: 25px;
+            height: 25px;
+        }
+
+        .results-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin: 18px 0 22px;
+        }
+
+        .results-count {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .sort-form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sort-form label {
+            color: #777;
+            font-weight: bold;
+        }
+
+        .sort-form select {
+            min-height: 38px;
+            padding: 7px 10px;
+            background: white;
+            border: 1px solid #d8d8d8;
+            border-radius: 5px;
+        }
+
+        .job-list {
+            display: grid;
+            gap: 22px;
+        }
+
+        .job-card {
+            display: grid;
+            grid-template-columns: 150px minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 24px;
+            padding: 22px;
+            background: white;
+            border: 1px solid #dedede;
+            border-radius: 5px;
+        }
+
+        .company-logo {
+            display: block;
+            width: 150px;
+            height: 112px;
+            object-fit: contain;
+            background: #f4f6fb;
+        }
+
+        .job-main {
+            min-width: 0;
+        }
+
+        .job-main h2 {
+            margin: 0 0 8px;
+            font-size: 20px;
+        }
+
+        .company-name {
+            margin: 0 0 12px;
+            color: #858585;
+            font-size: 17px;
+        }
+
+        .job-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            margin: 0 0 14px;
+            padding: 0;
+            color: #858585;
+            list-style: none;
+        }
+
+        .job-meta li {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .job-meta img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .job-bottom {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 18px;
+            color: #858585;
+        }
+
+        .status {
+            padding: 8px 18px;
+            color: #08783d;
+            background: #d3f3e3;
+            border-radius: 4px;
+        }
+
+        .deadline {
+            margin: 0;
+        }
+
+        .job-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+            align-self: stretch;
+            gap: 18px;
+        }
+
+        .save-button {
+            padding: 4px;
+            background: white;
+            border: 0;
+            cursor: pointer;
+        }
+
+        .save-button img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .save-button[aria-pressed="true"] {
+            background: #edf4ff;
+            border-radius: 5px;
+        }
+
+        .details-link {
+            color: #1760f5;
+            background: #f4f8ff;
+            border-color: #c7d9ff;
+            white-space: nowrap;
+        }
+
+        .empty-state {
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            background: #fafafa;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+        }
+
+        .site-footer {
+            padding: 18px;
+            text-align: center;
+            color: #777;
+            background: white;
+        }
+
+        @media (max-width: 900px) {
+            .nav {
+                flex-wrap: wrap;
+                padding: 14px 20px;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: space-between;
+                gap: 12px;
+            }
+
+            .layout {
+                grid-template-columns: 240px minmax(0, 1fr);
+            }
+
+            .filters {
+                padding: 22px 16px;
+            }
+
+            .results {
+                padding: 22px 18px;
+            }
+
+            .job-card {
+                grid-template-columns: 110px minmax(0, 1fr);
+                gap: 16px;
+                padding: 16px;
+            }
+
+            .company-logo {
+                width: 110px;
+                height: 90px;
+            }
+
+            .job-actions {
+                grid-column: 2;
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .nav-links {
+                overflow-x: auto;
+                justify-content: flex-start;
+            }
+
+            .nav-links a {
+                white-space: nowrap;
+                font-size: 14px;
+            }
+
+            .layout {
+                display: block;
+            }
+
+            .filters {
+                border-right: 0;
+                border-bottom: 1px solid #dedede;
+            }
+
+            .results {
+                padding: 20px 14px;
+            }
+
+            .results-toolbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .job-card {
+                grid-template-columns: 84px minmax(0, 1fr);
+                gap: 12px;
+            }
+
+            .company-logo {
+                width: 84px;
+                height: 78px;
+            }
+
+            .job-main h2 {
+                font-size: 17px;
+            }
+
+            .job-meta {
+                gap: 8px 12px;
+                font-size: 14px;
+            }
+
+            .job-actions {
+                grid-column: 1 / -1;
+                flex-direction: row;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <header>
-        <nav aria-label="Navigasi utama">
-            <a href="branda.html" aria-label="InternHub Home">
-                <img
-                    src="./assets/images/Icon-InternHub.svg"
-                    alt="InternHub"
-                    width="120"
-                >
+    <div class="browser-strip" aria-hidden="true">
+        <span class="browser-dot red"></span>
+        <span class="browser-dot yellow"></span>
+        <span class="browser-dot green"></span>
+    </div>
+
+    <header class="site-header">
+        <nav class="nav" aria-label="Navigasi utama">
+            <a class="brand" href="Branda.html" aria-label="InternHub Home">
+                <img src="./assets/images/Icon-InternHub.svg" alt="InternHub" width="120">
             </a>
 
-            <ul>
-                <li>
-                    <a href="FieldInternship.html" aria-current="page">
-                        Field Internship
-                    </a>
-                </li>
-                <li><a href="saved.html">Saved</a></li>
-                <li><a href="applications.html">Application</a></li>
-                <li><a href="resources.html">Resources</a></li>
+            <ul class="nav-links">
+                <li><a href="FieldInternship.html" aria-current="page">Field Internship</a></li>
+                <li><a href="Saved.html">Saved</a></li>
+                <li><a href="Applications.html">Applications</a></li>
+                <li><a href="Resources.html">Resources</a></li>
             </ul>
 
-            <a href="profile.html" aria-label="Profil pengguna">
-                <img
-                    src="./assets/images/Gambar-FotoPersona.png"
-                    alt="Foto profil pengguna"
-                    width="48"
-                    height="48"
-                >
+            <a class="profile" href="Applications.html" aria-label="Lihat aplikasi saya">
+                <img src="./assets/images/Gambar-FotoPersona.png" alt="Foto profil pengguna" width="48" height="48">
             </a>
         </nav>
     </header>
 
-    <main>
-        <aside aria-labelledby="filter-title">
-            <h1 id="filter-title">Filters</h1>
+    <main class="layout">
+        <aside class="filters" aria-labelledby="filter-title">
+            <div class="filter-heading">
+                <h1 id="filter-title">Filters</h1>
+                <button class="reset-link" id="reset-all" type="button">Reset</button>
+            </div>
 
-            <a href="FieldInternship.html">Reset</a>
-
-            <form action="FieldInternship.html" method="get">
-                <fieldset>
+            <form id="filter-form">
+                <fieldset class="filter-group">
                     <legend>Position</legend>
 
-                    <input type="checkbox" id="uiux" name="position" value="UI/UX Designer">
-                    <label for="uiux">UI/UX Designer</label>
-                    <br>
+                    <label class="check-row">
+                        <input type="checkbox" name="position" value="UI/UX Designer">
+                        UI/UX Designer
+                    </label>
 
-                    <input type="checkbox" id="product-designer" name="position" value="Product Designer">
-                    <label for="product-designer">Product Designer</label>
-                    <br>
+                    <label class="check-row">
+                        <input type="checkbox" name="position" value="Product Designer">
+                        Product Designer
+                    </label>
 
-                    <input type="checkbox" id="frontend" name="position" value="Frontend Developer">
-                    <label for="frontend">Frontend Developer</label>
-                    <br>
+                    <label class="check-row">
+                        <input type="checkbox" name="position" value="Frontend Developer">
+                        Frontend Developer
+                    </label>
 
-                    <input type="checkbox" id="marketing" name="position" value="Marketing">
-                    <label for="marketing">Marketing</label>
-                    <br>
+                    <label class="check-row">
+                        <input type="checkbox" name="position" value="Marketing">
+                        Marketing
+                    </label>
 
-                    <input type="checkbox" id="data-analyst" name="position" value="Data Analyst">
-                    <label for="data-analyst">Data Analyst</label>
-                    <br>
+                    <label class="check-row">
+                        <input type="checkbox" name="position" value="Data Analyst">
+                        Data Analyst
+                    </label>
 
                     <details>
                         <summary>See more</summary>
 
-                        <input type="checkbox" id="business-analyst" name="position" value="Business Analyst">
-                        <label for="business-analyst">Business Analyst</label>
-                        <br>
+                        <label class="check-row">
+                            <input type="checkbox" name="position" value="Business Analyst">
+                            Business Analyst
+                        </label>
 
-                        <input type="checkbox" id="software-engineer" name="position" value="Software Engineer">
-                        <label for="software-engineer">Software Engineer</label>
+                        <label class="check-row">
+                            <input type="checkbox" name="position" value="Software Engineer">
+                            Software Engineer
+                        </label>
                     </details>
                 </fieldset>
 
-                <fieldset>
+                <fieldset class="filter-group">
                     <legend>Location</legend>
-
                     <label for="location">Choose location</label>
-
                     <select id="location" name="location">
                         <option value="">All locations</option>
                         <option value="Jakarta">Jakarta</option>
@@ -95,238 +590,380 @@
                         <option value="Tangerang">Tangerang</option>
                         <option value="Remote">Remote</option>
                     </select>
-
-                    <img
-                        src="./assets/images/Icon-DropDown.svg"
-                        alt=""
-                        width="16"
-                        height="16"
-                    >
                 </fieldset>
 
-                <fieldset>
+                <fieldset class="filter-group">
                     <legend>Work Type</legend>
 
-                    <input type="checkbox" id="onsite" name="work-type" value="On-site">
-                    <label for="onsite">On-site</label>
-                    <br>
+                    <label class="check-row">
+                        <input type="checkbox" name="workType" value="On-site">
+                        On-site
+                    </label>
 
-                    <input type="checkbox" id="hybrid" name="work-type" value="Hybrid">
-                    <label for="hybrid">Hybrid</label>
-                    <br>
+                    <label class="check-row">
+                        <input type="checkbox" name="workType" value="Hybrid">
+                        Hybrid
+                    </label>
 
-                    <input type="checkbox" id="remote" name="work-type" value="Remote">
-                    <label for="remote">Remote</label>
+                    <label class="check-row">
+                        <input type="checkbox" name="workType" value="Remote">
+                        Remote
+                    </label>
                 </fieldset>
 
-                <fieldset>
+                <fieldset class="filter-group">
                     <legend>Duration</legend>
-
                     <label for="duration">Choose duration</label>
-
                     <select id="duration" name="duration">
                         <option value="">Any duration</option>
                         <option value="less-than-3">Less than 3 months</option>
                         <option value="3-6">3–6 months</option>
                         <option value="more-than-6">More than 6 months</option>
                     </select>
-
-                    <img
-                        src="./assets/images/Icon-DropDown.svg"
-                        alt=""
-                        width="16"
-                        height="16"
-                    >
                 </fieldset>
 
-                <fieldset>
+                <fieldset class="filter-group">
                     <legend>Status</legend>
 
-                    <input type="checkbox" id="open" name="status" value="Open">
-                    <label for="open">Open</label>
-                    <br>
+                    <label class="check-row">
+                        <input type="checkbox" name="status" value="Open">
+                        Open
+                    </label>
 
-                    <input type="checkbox" id="closing-soon" name="status" value="Closing Soon">
-                    <label for="closing-soon">Closing Soon</label>
+                    <label class="check-row">
+                        <input type="checkbox" name="status" value="Closing Soon">
+                        Closing Soon
+                    </label>
                 </fieldset>
 
-                <button type="reset">Reset Filters</button>
-                <button type="submit">Apply Filters</button>
+                <div class="filter-actions">
+                    <button class="button" type="reset">Reset Filters</button>
+                    <button class="button button-primary" type="submit">Apply Filters</button>
+                </div>
             </form>
         </aside>
 
-        <section aria-labelledby="internship-title">
+        <section class="results" aria-labelledby="internship-title">
             <h1 id="internship-title">Find Your Internship</h1>
 
-            <form action="FieldInternship.html" method="get">
+            <form class="search-form" id="search-form" role="search">
                 <label for="keyword">Search internship</label>
-
-                <input
-                    type="search"
-                    id="keyword"
-                    name="keyword"
-                    placeholder="Search position, company, or keyword..."
-                >
+                <input type="search" id="keyword" name="keyword" placeholder="Search position, company, or keyword...">
 
                 <button type="submit" aria-label="Search internships">
-                    <img
-                        src="./assets/images/Icon-Search.svg"
-                        alt=""
-                        width="24"
-                        height="24"
-                    >
+                    <img src="./assets/images/Icon-Search.svg" alt="" width="24" height="24">
                 </button>
             </form>
 
-            <p><strong>124 internships found</strong></p>
+            <div class="results-toolbar">
+                <p class="results-count" id="results-count" aria-live="polite">2 internships found</p>
 
-            <form action="FieldInternship.html" method="get">
-                <label for="sort">Sort by</label>
-
-                <select id="sort" name="sort">
-                    <option value="relevant">Most Relevant</option>
-                    <option value="newest">Newest</option>
-                    <option value="deadline">Nearest Deadline</option>
-                </select>
-
-                <img
-                    src="./assets/images/Icon-DropDown.svg"
-                    alt=""
-                    width="16"
-                    height="16"
-                >
-
-                <button type="submit">Sort</button>
-            </form>
-
-            <article>
-                <img
-                    src="./assets/images/Gambar-TechCo.png"
-                    alt="Logo TechCo"
-                    width="176"
-                >
-
-                <h2>UI/UX Design Intern</h2>
-                <p>TechCo</p>
-
-                <ul>
-                    <li>
-                        <img
-                            src="./assets/images/Icon-Lokasi.svg"
-                            alt=""
-                            width="20"
-                            height="20"
-                        >
-                        Jakarta
-                    </li>
-                    <li>
-                        <img
-                            src="./assets/images/Icon-ModelKerja.svg"
-                            alt=""
-                            width="20"
-                            height="20"
-                        >
-                        Hybrid
-                    </li>
-                    <li>
-                        <img
-                            src="./assets/images/Icon-Durasi.svg"
-                            alt=""
-                            width="20"
-                            height="20"
-                        >
-                        3–6 months
-                    </li>
-                </ul>
-
-                <p><strong>Open</strong></p>
-                <p>Deadline 30 Oct 2026</p>
-
-                <a href="internship-detail.html">View Details</a>
-
-                <form action="saved.html" method="get">
-                    <button
-                        type="submit"
-                        name="save"
-                        value="techco-uiux"
-                        aria-label="Save internship at TechCo"
-                    >
-                        <img
-                            src="./assets/images/Icon-SaveInternship.svg"
-                            alt=""
-                            width="24"
-                            height="24"
-                        >
-                    </button>
+                <form class="sort-form" id="sort-form">
+                    <label for="sort">Sort by</label>
+                    <select id="sort" name="sort">
+                        <option value="relevant">Most Relevant</option>
+                        <option value="newest">Newest</option>
+                        <option value="deadline">Nearest Deadline</option>
+                    </select>
+                    <button class="button" type="submit">Sort</button>
                 </form>
-            </article>
+            </div>
 
-            <article>
-                <img
-                    src="./assets/images/Gambar-AeroLabs.png"
-                    alt="Logo AeroLabs"
-                    width="176"
-                >
+            <div class="job-list" id="job-list">
+                <article class="job-card"
+                    data-id="techco-uiux"
+                    data-position="UI/UX Designer"
+                    data-company="TechCo"
+                    data-location="Jakarta"
+                    data-work-type="Hybrid"
+                    data-duration="3-6"
+                    data-status="Open"
+                    data-deadline="2026-10-30"
+                    data-keywords="ui ux design designer internship">
 
-                <h2>UI/UX Design Intern</h2>
-                <p>AeroLabs</p>
+                    <img class="company-logo" src="./assets/images/Gambar-TechCo.png" alt="Logo TechCo" width="150">
 
-                <ul>
-                    <li>
-                        <img
-                            src="./assets/images/Icon-Lokasi.svg"
-                            alt=""
-                            width="20"
-                            height="20"
-                        >
-                        Jakarta
-                    </li>
-                    <li>
-                        <img
-                            src="./assets/images/Icon-ModelKerja.svg"
-                            alt=""
-                            width="20"
-                            height="20"
-                        >
-                        Hybrid
-                    </li>
-                    <li>
-                        <img
-                            src="./assets/images/Icon-Durasi.svg"
-                            alt=""
-                            width="20"
-                            height="20"
-                        >
-                        3–6 months
-                    </li>
-                </ul>
+                    <div class="job-main">
+                        <h2>UI/UX Design Intern</h2>
+                        <p class="company-name">TechCo</p>
 
-                <p><strong>Open</strong></p>
-                <p>Deadline 30 Nov 2026</p>
+                        <ul class="job-meta">
+                            <li><img src="./assets/images/Icon-Lokasi.svg" alt=""> Jakarta</li>
+                            <li><img src="./assets/images/Icon-ModelKerja.svg" alt=""> Hybrid</li>
+                            <li><img src="./assets/images/Icon-Durasi.svg" alt=""> 3–6 months</li>
+                        </ul>
 
-                <a href="internship-detail.html">View Details</a>
+                        <div class="job-bottom">
+                            <span class="status">Open</span>
+                            <p class="deadline">Deadline 30 Oct 2026</p>
+                        </div>
+                    </div>
 
-                <form action="saved.html" method="get">
-                    <button
-                        type="submit"
-                        name="save"
-                        value="aerolabs-uiux"
-                        aria-label="Save internship at AeroLabs"
-                    >
-                        <img
-                            src="./assets/images/Icon-SaveInternship.svg"
-                            alt=""
-                            width="24"
-                            height="24"
-                        >
-                    </button>
-                </form>
-            </article>
+                    <div class="job-actions">
+                        <button class="save-button" type="button" data-save="techco-uiux" aria-label="Simpan lowongan TechCo" aria-pressed="false">
+                            <img src="./assets/images/Icon-SaveInternship.svg" alt="" width="24" height="24">
+                        </button>
+                        <a class="button details-link" href="DetailLowongan.html">View Details</a>
+                    </div>
+                </article>
+
+                <article class="job-card"
+                    data-id="aerolabs-uiux"
+                    data-position="UI/UX Designer"
+                    data-company="AeroLabs"
+                    data-location="Jakarta"
+                    data-work-type="Hybrid"
+                    data-duration="3-6"
+                    data-status="Open"
+                    data-deadline="2026-11-30"
+                    data-keywords="ui ux design designer product internship">
+
+                    <img class="company-logo" src="./assets/images/Gambar-AeroLabs.png" alt="Logo AeroLabs" width="150">
+
+                    <div class="job-main">
+                        <h2>UI/UX Design Intern</h2>
+                        <p class="company-name">AeroLabs</p>
+
+                        <ul class="job-meta">
+                            <li><img src="./assets/images/Icon-Lokasi.svg" alt=""> Jakarta</li>
+                            <li><img src="./assets/images/Icon-ModelKerja.svg" alt=""> Hybrid</li>
+                            <li><img src="./assets/images/Icon-Durasi.svg" alt=""> 3–6 months</li>
+                        </ul>
+
+                        <div class="job-bottom">
+                            <span class="status">Open</span>
+                            <p class="deadline">Deadline 30 Nov 2026</p>
+                        </div>
+                    </div>
+
+                    <div class="job-actions">
+                        <button class="save-button" type="button" data-save="aerolabs-uiux" aria-label="Simpan lowongan AeroLabs" aria-pressed="false">
+                            <img src="./assets/images/Icon-SaveInternship.svg" alt="" width="24" height="24">
+                        </button>
+                        <a class="button details-link" href="DetailLowongan.html">View Details</a>
+                    </div>
+                </article>
+            </div>
+
+            <p id="empty-state" class="empty-state" hidden>
+                Tidak ada lowongan yang cocok. Coba ubah kata kunci atau filter.
+            </p>
         </section>
     </main>
 
-    <footer>
+    <footer class="site-footer">
         <p>&copy; 2026 InternHub. All rights reserved.</p>
     </footer>
+
+    <script>
+        (() => {
+            const cards = Array.from(document.querySelectorAll(".job-card"));
+            const jobList = document.getElementById("job-list");
+            const filterForm = document.getElementById("filter-form");
+            const searchForm = document.getElementById("search-form");
+            const keywordInput = document.getElementById("keyword");
+            const locationSelect = document.getElementById("location");
+            const durationSelect = document.getElementById("duration");
+            const sortSelect = document.getElementById("sort");
+            const count = document.getElementById("results-count");
+            const emptyState = document.getElementById("empty-state");
+            const storageKey = "internhub-saved-internships";
+
+            function getSavedIds() {
+                try {
+                    return JSON.parse(localStorage.getItem(storageKey) || "[]");
+                } catch (error) {
+                    return [];
+                }
+            }
+
+            function updateSaveButtons() {
+                const savedIds = getSavedIds();
+
+                document.querySelectorAll("[data-save]").forEach(button => {
+                    const saved = savedIds.includes(button.dataset.save);
+                    button.setAttribute("aria-pressed", String(saved));
+                    button.setAttribute(
+                        "aria-label",
+                        (saved ? "Hapus dari Saved: " : "Simpan lowongan: ") + button.dataset.save
+                    );
+                });
+            }
+
+            function checkedValues(name) {
+                return Array.from(
+                    filterForm.querySelectorAll('input[name="' + name + '"]:checked')
+                ).map(input => input.value);
+            }
+
+            function applyFilters() {
+                const keyword = keywordInput.value.trim().toLowerCase();
+                const positions = checkedValues("position");
+                const workTypes = checkedValues("workType");
+                const statuses = checkedValues("status");
+                const location = locationSelect.value;
+                const duration = durationSelect.value;
+
+                let visibleCards = cards.filter(card => {
+                    const searchable = [
+                        card.dataset.position,
+                        card.dataset.company,
+                        card.dataset.location,
+                        card.dataset.workType,
+                        card.dataset.status,
+                        card.dataset.keywords
+                    ].join(" ").toLowerCase();
+
+                    const matchesKeyword = !keyword || searchable.includes(keyword);
+                    const matchesPosition = positions.length === 0 || positions.includes(card.dataset.position);
+                    const matchesLocation = !location || card.dataset.location === location;
+                    const matchesWorkType = workTypes.length === 0 || workTypes.includes(card.dataset.workType);
+                    const matchesDuration = !duration || card.dataset.duration === duration;
+                    const matchesStatus = statuses.length === 0 || statuses.includes(card.dataset.status);
+
+                    return matchesKeyword &&
+                        matchesPosition &&
+                        matchesLocation &&
+                        matchesWorkType &&
+                        matchesDuration &&
+                        matchesStatus;
+                });
+
+                if (sortSelect.value === "deadline") {
+                    visibleCards.sort((a, b) =>
+                        new Date(a.dataset.deadline) - new Date(b.dataset.deadline)
+                    );
+                } else if (sortSelect.value === "newest") {
+                    visibleCards.sort((a, b) =>
+                        new Date(b.dataset.deadline) - new Date(a.dataset.deadline)
+                    );
+                }
+
+                cards.forEach(card => {
+                    card.hidden = !visibleCards.includes(card);
+                });
+
+                visibleCards.forEach(card => jobList.appendChild(card));
+
+                count.textContent = visibleCards.length +
+                    (visibleCards.length === 1 ? " internship found" : " internships found");
+
+                emptyState.hidden = visibleCards.length > 0;
+                jobList.hidden = visibleCards.length === 0;
+
+                const params = new URLSearchParams();
+
+                if (keywordInput.value.trim()) {
+                    params.set("keyword", keywordInput.value.trim());
+                }
+
+                positions.forEach(value => params.append("position", value));
+
+                if (location) {
+                    params.set("location", location);
+                }
+
+                workTypes.forEach(value => params.append("workType", value));
+
+                if (duration) {
+                    params.set("duration", duration);
+                }
+
+                statuses.forEach(value => params.append("status", value));
+
+                if (sortSelect.value !== "relevant") {
+                    params.set("sort", sortSelect.value);
+                }
+
+                const query = params.toString();
+
+                history.replaceState(
+                    null,
+                    "",
+                    window.location.pathname + (query ? "?" + query : "")
+                );
+            }
+
+            searchForm.addEventListener("submit", event => {
+                event.preventDefault();
+                applyFilters();
+            });
+
+            filterForm.addEventListener("submit", event => {
+                event.preventDefault();
+                applyFilters();
+            });
+
+            filterForm.addEventListener("reset", () => {
+                setTimeout(() => {
+                    keywordInput.value = "";
+                    sortSelect.value = "relevant";
+                    applyFilters();
+                }, 0);
+            });
+
+            document.getElementById("sort-form").addEventListener("submit", event => {
+                event.preventDefault();
+                applyFilters();
+            });
+
+            document.getElementById("reset-all").addEventListener("click", () => {
+                filterForm.reset();
+                keywordInput.value = "";
+                sortSelect.value = "relevant";
+                setTimeout(applyFilters, 0);
+            });
+
+            document.querySelectorAll("[data-save]").forEach(button => {
+                button.addEventListener("click", () => {
+                    const id = button.dataset.save;
+                    const savedIds = getSavedIds();
+
+                    const updatedIds = savedIds.includes(id)
+                        ? savedIds.filter(savedId => savedId !== id)
+                        : [...savedIds, id];
+
+                    localStorage.setItem(storageKey, JSON.stringify(updatedIds));
+                    updateSaveButtons();
+                });
+            });
+
+            const params = new URLSearchParams(window.location.search);
+            keywordInput.value = params.get("keyword") || "";
+
+            params.getAll("position").forEach(value => {
+                const input = Array.from(
+                    filterForm.querySelectorAll('input[name="position"]')
+                ).find(item => item.value === value);
+
+                if (input) input.checked = true;
+            });
+
+            locationSelect.value = params.get("location") || "";
+
+            params.getAll("workType").forEach(value => {
+                const input = Array.from(
+                    filterForm.querySelectorAll('input[name="workType"]')
+                ).find(item => item.value === value);
+
+                if (input) input.checked = true;
+            });
+
+            durationSelect.value = params.get("duration") || "";
+
+            params.getAll("status").forEach(value => {
+                const input = Array.from(
+                    filterForm.querySelectorAll('input[name="status"]')
+                ).find(item => item.value === value);
+
+                if (input) input.checked = true;
+            });
+
+            sortSelect.value = params.get("sort") || "relevant";
+
+            updateSaveButtons();
+            applyFilters();
+        })();
+    </script>
 </body>
 </html>
