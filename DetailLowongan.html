@@ -6,242 +6,683 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Detail lowongan UI/UX Design Intern di TechCo melalui InternHub.">
     <title>Detail Lowongan - InternHub</title>
-</head>
-<body>
 
-    <header>
-        <nav aria-label="Navigasi halaman detail">
-            <a href="FieldInternship.html">
-                <img
-                    src="./assets/images/Icon-Back.svg"
-                    alt=""
-                    width="24"
-                    height="24"
-                >
-                Back to Result
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            color: #111;
+            background: #f5f6f8;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        a {
+            color: #1760ff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .browser-bar {
+            height: 42px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 20px;
+            background: #e5eaf2;
+        }
+
+        .browser-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+
+        .red { background: #f16d70; }
+        .yellow { background: #ffc252; }
+        .green { background: #71c987; }
+
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid #dedede;
+        }
+
+        .topbar-inner {
+            max-width: 1440px;
+            min-height: 80px;
+            margin: 0 auto;
+            padding: 12px 56px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: #111;
+            font-size: 20px;
+        }
+
+        .back-link img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .profile-link img {
+            display: block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .page {
+            max-width: 1440px;
+            min-height: calc(100vh - 122px);
+            margin: 0 auto;
+            padding: 42px 56px 55px;
+            background: #fff;
+        }
+
+        .detail-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(330px, 1.05fr);
+            gap: 42px;
+            align-items: start;
+        }
+
+        .main-column {
+            min-width: 0;
+        }
+
+        .job-summary {
+            display: grid;
+            grid-template-columns: 280px minmax(0, 1fr);
+            gap: 42px;
+            align-items: start;
+        }
+
+        .company-logo {
+            display: block;
+            width: 100%;
+            max-width: 280px;
+            height: 236px;
+            object-fit: contain;
+        }
+
+        .job-information {
+            min-width: 0;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .badge-open {
+            color: #078332;
+            background: #d2f1e2;
+        }
+
+        .badge-verified {
+            color: #1760ff;
+            background: #edf4ff;
+        }
+
+        .title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .job-title {
+            margin: 0 0 12px;
+            font-size: 38px;
+            line-height: 1.15;
+        }
+
+        .company-name {
+            margin: 0 0 20px;
+            color: #858585;
+            font-size: 20px;
+        }
+
+        .save-button {
+            flex-shrink: 0;
+            padding: 0;
+            border: none;
+            background: transparent;
+        }
+
+        .save-button img {
+            display: block;
+            width: 30px;
+            height: 36px;
+        }
+
+        .job-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            margin: 0 0 24px;
+            padding: 0;
+            list-style: none;
+            color: #858585;
+            font-size: 18px;
+        }
+
+        .job-meta li {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .job-meta img,
+        .deadline img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+        }
+
+        .deadline {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 0;
+            color: #858585;
+            font-size: 18px;
+        }
+
+        .apply-button {
+            display: block;
+            width: 100%;
+            margin: 34px 0 42px;
+            padding: 19px 24px;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            background: #1760ff;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .apply-button:hover {
+            background: #084be0;
+            text-decoration: none;
+        }
+
+        .overview-heading {
+            margin: 0;
+            padding: 0 0 7px;
+            border-bottom: 3px solid #858585;
+            font-size: 25px;
+        }
+
+        .content-section {
+            margin: 28px 4px 18px;
+            scroll-margin-top: 20px;
+        }
+
+        .content-section h2 {
+            margin: 0 0 10px;
+            font-size: 23px;
+        }
+
+        .content-section h3 {
+            margin: 18px 0 7px;
+            font-size: 22px;
+        }
+
+        .content-section p,
+        .content-section li {
+            color: #858585;
+            font-size: 19px;
+            line-height: 1.25;
+        }
+
+        .content-section p {
+            margin: 0;
+        }
+
+        .content-section ul {
+            margin: 0;
+            padding-left: 32px;
+        }
+
+        .company-panel {
+            min-width: 0;
+            padding: 20px 32px;
+            border: 1px solid #dedede;
+        }
+
+        .company-panel > h2 {
+            margin: 0 0 8px;
+            font-size: 24px;
+        }
+
+        .company-description {
+            margin: 0 0 42px;
+            color: #858585;
+            font-size: 19px;
+            line-height: 1.25;
+        }
+
+        .company-fact {
+            margin: 0 0 42px;
+        }
+
+        .company-fact h3 {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin: 0 0 5px;
+            font-size: 23px;
+        }
+
+        .company-fact h3 img {
+            width: 26px;
+            height: 26px;
+            object-fit: contain;
+        }
+
+        .company-fact p {
+            margin: 0 0 0 44px;
+            color: #858585;
+            font-size: 19px;
+            line-height: 1.3;
+            overflow-wrap: anywhere;
+        }
+
+        .gallery {
+            margin-top: 6px;
+        }
+
+        .gallery h2 {
+            margin: 0 0 12px;
+            font-size: 24px;
+        }
+
+        .gallery-main {
+            display: block;
+            width: 100%;
+            height: 138px;
+            margin-bottom: 14px;
+            object-fit: cover;
+        }
+
+        .gallery-secondary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .gallery-secondary img {
+            display: block;
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .save-notice {
+            display: none;
+            margin: 16px 0 0;
+            padding: 12px;
+            border-radius: 6px;
+            color: #14532d;
+            background: #dcfce7;
+        }
+
+        .save-notice.visible {
+            display: block;
+        }
+
+        footer {
+            padding: 18px;
+            color: #777;
+            background: #fff;
+            text-align: center;
+        }
+
+        @media (max-width: 1100px) {
+            .page {
+                padding: 30px 24px;
+            }
+
+            .topbar-inner {
+                padding-right: 24px;
+                padding-left: 24px;
+            }
+
+            .detail-layout {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 32px;
+            }
+
+            .company-panel {
+                max-width: none;
+            }
+
+            .job-summary {
+                grid-template-columns: 230px minmax(0, 1fr);
+                gap: 24px;
+            }
+
+            .job-title {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .page {
+                padding: 24px 16px;
+            }
+
+            .topbar-inner {
+                padding: 12px 16px;
+            }
+
+            .job-summary {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 20px;
+            }
+
+            .company-logo {
+                max-width: 200px;
+                height: 200px;
+            }
+
+            .job-title {
+                font-size: 29px;
+            }
+
+            .job-meta {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .badges {
+                gap: 12px;
+            }
+
+            .company-panel {
+                padding: 20px 16px;
+            }
+
+            .company-description {
+                margin-bottom: 28px;
+            }
+
+            .company-fact {
+                margin-bottom: 28px;
+            }
+
+            .content-section p,
+            .content-section li {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="browser-bar" aria-hidden="true">
+        <span class="browser-dot red"></span>
+        <span class="browser-dot yellow"></span>
+        <span class="browser-dot green"></span>
+    </div>
+
+    <header class="topbar">
+        <nav class="topbar-inner" aria-label="Navigasi halaman detail">
+            <a class="back-link" href="FieldInternship.html">
+                <img src="./assets/images/Icon-Back.svg" alt="">
+                <span>Back to Result</span>
             </a>
 
-            <a href="profile.html" aria-label="Profil pengguna">
+            <a class="profile-link" href="Applications.html" aria-label="Lihat aplikasi saya">
                 <img
                     src="./assets/images/Gambar-FotoPersona.png"
                     alt="Foto profil pengguna"
-                    width="48"
-                    height="48"
+                    width="50"
+                    height="50"
                 >
             </a>
         </nav>
     </header>
 
-    <main>
-        <h1>Detail Lowongan</h1>
+    <main class="page">
+        <div class="detail-layout">
+            <div class="main-column">
+                <article>
+                    <div class="job-summary">
+                        <img
+                            class="company-logo"
+                            src="./assets/images/Gambar-TechCo.png"
+                            alt="Logo TechCo"
+                            width="280"
+                            height="236"
+                        >
 
-        <article>
-            <img
-                src="./assets/images/Gambar-TechCo.png"
-                alt="Logo TechCo"
-                width="286"
-            >
+                        <div class="job-information">
+                            <div class="badges">
+                                <span class="badge badge-open">Open</span>
+                                <span class="badge badge-verified">Verified</span>
+                            </div>
 
-            <p>
-                <strong>Open</strong>
-                <strong>Verified</strong>
-            </p>
+                            <div class="title-row">
+                                <div>
+                                    <h1 class="job-title">UI/UX Design Intern</h1>
+                                    <p class="company-name">TechCo</p>
+                                </div>
 
-            <h2 id="job-title">UI/UX Design Intern</h2>
+                                <button
+                                    class="save-button"
+                                    id="save-button"
+                                    type="button"
+                                    aria-label="Simpan lowongan TechCo"
+                                    aria-pressed="false"
+                                >
+                                    <img
+                                        src="./assets/images/Icon-SaveInternship.svg"
+                                        alt=""
+                                        width="30"
+                                        height="36"
+                                    >
+                                </button>
+                            </div>
 
-            <p>TechCo</p>
+                            <ul class="job-meta">
+                                <li>
+                                    <img src="./assets/images/Icon-Lokasi.svg" alt="">
+                                    Jakarta
+                                </li>
+                                <li>
+                                    <img src="./assets/images/Icon-ModelKerja.svg" alt="">
+                                    Hybrid
+                                </li>
+                                <li>
+                                    <img src="./assets/images/Icon-Durasi.svg" alt="">
+                                    3-6 months
+                                </li>
+                            </ul>
 
-            <ul>
-                <li>
-                    <img
-                        src="./assets/images/Icon-Lokasi.svg"
-                        alt=""
-                        width="20"
-                        height="20"
-                    >
-                    Jakarta
-                </li>
-                <li>
-                    <img
-                        src="./assets/images/Icon-ModelKerja.svg"
-                        alt=""
-                        width="20"
-                        height="20"
-                    >
-                    Hybrid
-                </li>
-                <li>
-                    <img
-                        src="./assets/images/Icon-Durasi.svg"
-                        alt=""
-                        width="20"
-                        height="20"
-                    >
-                    3–6 months
-                </li>
-            </ul>
+                            <p class="deadline">
+                                <img src="./assets/images/Icon-Deadline.svg" alt="">
+                                <span>Deadline 30 Oct 2026</span>
+                            </p>
+                        </div>
+                    </div>
 
-            <p>
-                <img
-                    src="./assets/images/Icon-Deadline.svg"
-                    alt=""
-                    width="20"
-                    height="20"
-                >
-                Deadline 30 Oct 2026
-            </p>
-
-            <form action="saved.html" method="get">
-                <button
-                    type="submit"
-                    name="save"
-                    value="techco-uiux"
-                    aria-label="Save internship at TechCo"
-                >
-                    <img
-                        src="./assets/images/Icon-SaveInternship.svg"
-                        alt=""
-                        width="24"
-                        height="24"
-                    >
-                </button>
-            </form>
-
-            <p>
-                <a href="ApplicationStep1.html">Apply Now</a>
-            </p>
-        </article>
-
-        <nav aria-label="Bagian informasi lowongan">
-            <ul>
-                <li><a href="#overview">Overview</a></li>
-                <li><a href="#requirements">Requirements</a></li>
-                <li><a href="#about-company">About Company</a></li>
-            </ul>
-        </nav>
-
-        <section id="overview">
-            <h2>Job Description</h2>
-
-            <p>
-                Sebagai UI/UX Design Intern, kamu akan bekerja langsung
-                dengan tim product untuk menciptakan pengalaman digital
-                yang user-friendly. Kamu akan membantu dalam riset
-                pengguna, pembuatan wireframe, dan prototyping.
-            </p>
-
-            <h3>Responsibilities</h3>
-
-            <ul>
-                <li>
-                    Membuat wireframe, user flow, prototype, dan UI design.
-                </li>
-                <li>
-                    Melakukan user research dan usability testing.
-                </li>
-            </ul>
-        </section>
-
-        <section id="requirements">
-            <h2>Requirements</h2>
-
-            <ul>
-                <li>
-                    Mahasiswa atau fresh graduate jurusan terkait IT,
-                    bisnis, atau desain.
-                </li>
-                <li>
-                    Menguasai Figma dan dasar-dasar UI/UX.
-                </li>
-            </ul>
-        </section>
-
-        <section id="about-company">
-            <h2>About Company</h2>
-
-            <p>
-                TechCo adalah perusahaan teknologi yang berfokus pada
-                solusi digital inovatif untuk berbagai industri.
-            </p>
-        </section>
-
-        <aside>
-            <h2>Company Information</h2>
-
-            <section>
-                <h3>
-                    <img
-                        src="./assets/images/Icon-Industry.svg"
-                        alt=""
-                        width="24"
-                        height="24"
-                    >
-                    Industry
-                </h3>
-                <p>Information Technology</p>
-            </section>
-
-            <section>
-                <h3>
-                    <img
-                        src="./assets/images/Icon-CompanySize.svg"
-                        alt=""
-                        width="24"
-                        height="24"
-                    >
-                    Company Size
-                </h3>
-                <p>51–200 employees</p>
-            </section>
-
-            <section>
-                <h3>
-                    <img
-                        src="./assets/images/Icon-Website.svg"
-                        alt=""
-                        width="24"
-                        height="24"
-                    >
-                    Website
-                </h3>
-                <p>
-                    <a href="https://www.techco.com">
-                        www.techco.com
+                    <a class="apply-button" href="ApplicationStep1.html">
+                        Apply Now
                     </a>
+
+                    <h2 class="overview-heading" id="overview">Overview</h2>
+
+                    <section class="content-section">
+                        <h2>Job Description</h2>
+                        <p>
+                            Sebagai UI/UX Design Intern, kamu akan bekerja langsung
+                            dengan tim product untuk menciptakan pengalaman digital
+                            yang user-friendly. Kamu akan membantu dalam riset
+                            pengguna, pembuatan wireframe, prototyping
+                        </p>
+
+                        <h3>Responsibilities</h3>
+                        <ul>
+                            <li>Membuat wireframe, user flow, prototype, dan UI design.</li>
+                            <li>Melakukan user research dan usability testing.</li>
+                        </ul>
+
+                        <h3>Requirements</h3>
+                        <ul>
+                            <li>Mahasiswa/fresh graduate jurusan terkait IT, Bisnis atau Design</li>
+                            <li>Menguasai Figma dan dasar-dasar UI/UX</li>
+                        </ul>
+                    </section>
+
+                    <p class="save-notice" id="save-notice" role="status" aria-live="polite"></p>
+                </article>
+            </div>
+
+            <aside class="company-panel" aria-labelledby="company-panel-title">
+                <h2 id="company-panel-title">About Company</h2>
+
+                <p class="company-description">
+                    TechCo adalah perusahaan teknologi yang berfokus pada
+                    solusi digital inovatif untuk berbagai industri.
                 </p>
-            </section>
 
-            <section>
-                <h2>Gallery</h2>
+                <section class="company-fact">
+                    <h3>
+                        <img src="./assets/images/Icon-Industry.svg" alt="">
+                        Industry
+                    </h3>
+                    <p>Information Technology</p>
+                </section>
 
-                <figure>
+                <section class="company-fact">
+                    <h3>
+                        <img src="./assets/images/Icon-CompanySize.svg" alt="">
+                        Company Size
+                    </h3>
+                    <p>51-200 employees</p>
+                </section>
+
+                <section class="company-fact">
+                    <h3>
+                        <img src="./assets/images/Icon-Website.svg" alt="">
+                        Website
+                    </h3>
+                    <p>
+                        <a href="https://www.techco.com" target="_blank" rel="noopener noreferrer">
+                            www.techno.com
+                        </a>
+                    </p>
+                </section>
+
+                <section class="gallery" aria-labelledby="gallery-title">
+                    <h2 id="gallery-title">Gallery</h2>
+
                     <img
+                        class="gallery-main"
                         src="./assets/images/Gambar-Gallery1.png"
                         alt="Suasana ruang kantor TechCo"
                         width="360"
                     >
-                </figure>
 
-                <figure>
-                    <img
-                        src="./assets/images/Gambar-Gallery2.png"
-                        alt="Area kerja kantor TechCo"
-                        width="170"
-                    >
+                    <div class="gallery-secondary">
+                        <img
+                            src="./assets/images/Gambar-Gallery2.png"
+                            alt="Area kerja kantor TechCo"
+                            width="170"
+                        >
 
-                    <img
-                        src="./assets/images/Gambar-Gallery3.png"
-                        alt="Ruang rapat kantor TechCo"
-                        width="170"
-                    >
-                </figure>
-            </section>
-        </aside>
+                        <img
+                            src="./assets/images/Gambar-Gallery3.png"
+                            alt="Ruang rapat kantor TechCo"
+                            width="170"
+                        >
+                    </div>
+                </section>
+            </aside>
+        </div>
     </main>
 
     <footer>
         <p>&copy; 2026 InternHub. All rights reserved.</p>
     </footer>
 
+    <script>
+        (() => {
+            const saveButton = document.getElementById("save-button");
+            const saveNotice = document.getElementById("save-notice");
+
+            const storageKey = "internhub-saved-internships";
+            const internshipId = "techco-uiux";
+
+            function getSavedIds() {
+                try {
+                    const saved = JSON.parse(localStorage.getItem(storageKey) || "[]");
+                    return Array.isArray(saved) ? saved : [];
+                } catch (error) {
+                    return [];
+                }
+            }
+
+            function updateSaveButton() {
+                const isSaved = getSavedIds().includes(internshipId);
+
+                saveButton.setAttribute("aria-pressed", String(isSaved));
+                saveButton.setAttribute(
+                    "aria-label",
+                    isSaved
+                        ? "Hapus lowongan TechCo dari Saved"
+                        : "Simpan lowongan TechCo"
+                );
+
+                saveNotice.textContent = isSaved
+                    ? "Lowongan TechCo tersimpan di browser ini."
+                    : "";
+
+                saveNotice.classList.toggle("visible", isSaved);
+            }
+
+            saveButton.addEventListener("click", () => {
+                const savedIds = getSavedIds();
+                const updatedIds = savedIds.includes(internshipId)
+                    ? savedIds.filter(id => id !== internshipId)
+                    : [...savedIds, internshipId];
+
+                try {
+                    localStorage.setItem(storageKey, JSON.stringify(updatedIds));
+                    updateSaveButton();
+                } catch (error) {
+                    saveNotice.textContent =
+                        "Lowongan tidak dapat disimpan di browser ini.";
+                    saveNotice.classList.add("visible");
+                }
+            });
+
+            updateSaveButton();
+        })();
+    </script>
 </body>
 </html>

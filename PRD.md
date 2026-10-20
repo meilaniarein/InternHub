@@ -243,8 +243,6 @@ The web pages should be tested in a modern web browser to verify that their cont
 
 ## 11. Success Criteria
 
-## 11. Success Criteria
-
 The initial InternHub MVP is considered to meet its functional objectives when:
 
 1. Users can access the internship listings and view available vacancies.

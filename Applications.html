@@ -4,118 +4,574 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="description"
+        content="Pantau status lamaran magangmu melalui InternHub."
+    >
     <title>My Applications - InternHub</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f5f5;
+            color: #080808;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .browser-bar {
+            height: 38px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 18px;
+            background: #e5eaf2;
+        }
+
+        .browser-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        .red {
+            background: #ff696b;
+        }
+
+        .yellow {
+            background: #ffc252;
+        }
+
+        .green {
+            background: #70cd85;
+        }
+
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .topbar-inner {
+            max-width: 1440px;
+            min-height: 74px;
+            margin: 0 auto;
+            padding: 12px 5.5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .brand {
+            display: block;
+            flex-shrink: 0;
+        }
+
+        .brand img {
+            display: block;
+            width: 105px;
+            height: auto;
+        }
+
+        .navigation ul {
+            display: flex;
+            align-items: center;
+            gap: 46px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .navigation a {
+            color: #777;
+            font-size: 18px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .navigation a[aria-current="page"] {
+            color: #155cff;
+        }
+
+        .profile {
+            display: block;
+            flex-shrink: 0;
+        }
+
+        .profile img {
+            display: block;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        main {
+            max-width: 1440px;
+            min-height: calc(100vh - 112px);
+            margin: 0 auto;
+            padding: 28px 5.3% 60px;
+            background: #fff;
+        }
+
+        h1 {
+            margin: 0 0 42px;
+            font-size: 38px;
+            line-height: 1.2;
+        }
+
+        .application-list {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .application-card {
+            display: grid;
+            grid-template-columns: 222px minmax(0, 1fr) 170px;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+            padding: 20px 22px 20px 36px;
+            border: 1px solid #dedede;
+            border-radius: 5px;
+            background: #fff;
+        }
+
+        .company-logo {
+            display: block;
+            width: 222px;
+            height: 126px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .application-info {
+            min-width: 0;
+        }
+
+        .application-info h2 {
+            margin: 0 0 9px;
+            font-size: 18px;
+            line-height: 1.3;
+        }
+
+        .company-name {
+            margin: 0 0 12px;
+            color: #858585;
+            font-size: 18px;
+        }
+
+        .job-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 30px;
+            margin: 0 0 22px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .job-meta li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #858585;
+            font-size: 16px;
+            white-space: nowrap;
+        }
+
+        .job-meta img {
+            display: block;
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .applied-date {
+            margin: 0;
+            color: #858585;
+            font-size: 18px;
+        }
+
+        .application-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: center;
+            gap: 16px;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 44px;
+            padding: 10px 12px;
+            border-radius: 24px;
+            color: #111;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .status-submitted {
+            background: #ffdab3;
+        }
+
+        .status-interview {
+            background: #ead4fa;
+        }
+
+        .details-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 44px;
+            padding: 10px 12px;
+            border: 1px solid #89949a;
+            border-radius: 5px;
+            background: #edf7ff;
+            color: #155cff;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .details-link:hover {
+            background: #dcecff;
+        }
+
+        @media (max-width: 1050px) {
+            .topbar-inner {
+                padding-right: 24px;
+                padding-left: 24px;
+                gap: 20px;
+            }
+
+            .navigation ul {
+                gap: 24px;
+            }
+
+            .navigation a {
+                font-size: 15px;
+            }
+
+            main {
+                padding-right: 24px;
+                padding-left: 24px;
+            }
+
+            .application-card {
+                grid-template-columns: 160px minmax(0, 1fr) 145px;
+                gap: 22px;
+                padding: 18px;
+            }
+
+            .company-logo {
+                width: 160px;
+                height: 110px;
+            }
+
+            .job-meta {
+                gap: 12px 16px;
+            }
+
+            .job-meta li {
+                font-size: 14px;
+            }
+
+            .applied-date,
+            .company-name {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .topbar-inner {
+                flex-wrap: wrap;
+                gap: 16px;
+                padding: 14px 18px;
+            }
+
+            .navigation {
+                order: 3;
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .navigation ul {
+                width: max-content;
+                gap: 24px;
+                padding-bottom: 4px;
+            }
+
+            main {
+                padding: 26px 16px 40px;
+            }
+
+            h1 {
+                margin-bottom: 26px;
+                font-size: 30px;
+            }
+
+            .application-list {
+                gap: 18px;
+            }
+
+            .application-card {
+                grid-template-columns: 100px minmax(0, 1fr);
+                gap: 14px;
+                padding: 14px;
+            }
+
+            .company-logo {
+                width: 100px;
+                height: 85px;
+            }
+
+            .application-info h2 {
+                font-size: 16px;
+            }
+
+            .company-name {
+                margin-bottom: 10px;
+                font-size: 14px;
+            }
+
+            .job-meta {
+                gap: 8px 12px;
+                margin-bottom: 12px;
+            }
+
+            .job-meta li {
+                font-size: 13px;
+                white-space: normal;
+            }
+
+            .job-meta img {
+                width: 18px;
+                height: 18px;
+            }
+
+            .applied-date {
+                font-size: 14px;
+            }
+
+            .application-actions {
+                grid-column: 1 / -1;
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                gap: 10px;
+                padding-top: 12px;
+                border-top: 1px solid #eee;
+            }
+
+            .status-badge,
+            .details-link {
+                min-height: 40px;
+                padding: 8px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
+
 <body>
+    <div class="browser-bar" aria-hidden="true">
+        <span class="browser-dot red"></span>
+        <span class="browser-dot yellow"></span>
+        <span class="browser-dot green"></span>
+    </div>
 
-    <header>
-        <a href="branda.html">
-            <img src="./assets/images/Icon-InternHub.svg" alt="InternHub Logo">
-        </a>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a
+                class="brand"
+                href="Branda.html"
+                aria-label="InternHub Home"
+            >
+                <img
+                    src="./assets/images/Icon-InternHub.svg"
+                    alt="InternHub"
+                    width="105"
+                >
+            </a>
 
-        <nav aria-label="Main navigation">
-            <ul>
-                <li><a href="FieldInternship.html">Field Internship</a></li>
-                <li><a href="saved.html">Saved</a></li>
-                <li><a href="applications.html" aria-current="page">Application</a></li>
-                <li><a href="resources.html">Resources</a></li>
-            </ul>
-        </nav>
+            <nav class="navigation" aria-label="Navigasi utama">
+                <ul>
+                    <li>
+                        <a href="FieldInternship.html">
+                            Field Internship
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Saved.html">Saved</a>
+                    </li>
+                    <li>
+                        <a href="Applications.html" aria-current="page">
+                            Application
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Resources.html">Resources</a>
+                    </li>
+                </ul>
+            </nav>
 
-        <a href="profile.html">
-            <img src="./assets/images/Gambar-FotoPersona.png" alt="Profile">
-        </a>
+            <a
+                class="profile"
+                href="Applications.html"
+                aria-label="Lihat aplikasi saya"
+            >
+                <img
+                    src="./assets/images/Gambar-FotoPersona.png"
+                    alt="Foto profil pengguna"
+                    width="48"
+                    height="48"
+                >
+            </a>
+        </div>
     </header>
 
     <main>
         <h1>My Applications</h1>
 
-        <nav aria-label="Application status">
-            <ul>
-                <li><a href="#all">All (3)</a></li>
-                <li><a href="#in-review">In Review (1)</a></li>
-                <li><a href="#interview">Interview (1)</a></li>
-                <li><a href="#rejected">Rejected (0)</a></li>
-            </ul>
-        </nav>
+        <section
+            class="application-list"
+            aria-label="Daftar lamaran saya"
+        >
+            <article class="application-card">
+                <img
+                    class="company-logo"
+                    src="./assets/images/Gambar-TechCo.png"
+                    alt="Logo TechCo"
+                    width="222"
+                    height="126"
+                >
 
-        <section id="all">
-            <h2>All Applications</h2>
+                <div class="application-info">
+                    <h2>UI/UX Design Intern</h2>
+                    <p class="company-name">TechCo</p>
 
-            <article>
-                <img src="./assets/images/Gambar-TechCo.png" alt="TechCo">
+                    <ul class="job-meta">
+                        <li>
+                            <img
+                                src="./assets/images/Icon-Lokasi.svg"
+                                alt=""
+                                width="22"
+                                height="22"
+                            >
+                            Jakarta
+                        </li>
+                        <li>
+                            <img
+                                src="./assets/images/Icon-ModelKerja.svg"
+                                alt=""
+                                width="22"
+                                height="22"
+                            >
+                            Hybrid
+                        </li>
+                        <li>
+                            <img
+                                src="./assets/images/Icon-Durasi.svg"
+                                alt=""
+                                width="22"
+                                height="22"
+                            >
+                            3-6 months
+                        </li>
+                    </ul>
 
-                <h3>UI/UX Design Intern</h3>
-                <p>TechCo</p>
+                    <p class="applied-date">
+                        Applied on 30 Oct 2026
+                    </p>
+                </div>
 
-                <ul>
-                    <li>
-                        <img src="./assets/images/Icon-Lokasi.svg" alt="">
-                        Jakarta
-                    </li>
-                    <li>
-                        <img src="./assets/images/Icon-ModelKerja.svg" alt="">
-                        Hybrid
-                    </li>
-                    <li>
-                        <img src="./assets/images/Icon-Durasi.svg" alt="">
-                        3-6 months
-                    </li>
-                </ul>
+                <div class="application-actions">
+                    <span class="status-badge status-submitted">
+                        Submitted
+                    </span>
 
-                <p>Applied on 30 Oct 2026</p>
-                <p>Status: Submitted</p>
-
-                <p>
-                    <a href="internship-detail.html">View Details</a>
-                </p>
+                    <a
+                        class="details-link"
+                        href="DetailLowongan.html"
+                    >
+                        View Details
+                    </a>
+                </div>
             </article>
 
-            <article>
-                <img src="./assets/images/Gambar-AeroLabs.png" alt="AeroLabs">
+            <article class="application-card">
+                <img
+                    class="company-logo"
+                    src="./assets/images/Gambar-AeroLabs.png"
+                    alt="Logo AeroClub"
+                    width="222"
+                    height="126"
+                >
 
-                <h3>Product Designer Intern</h3>
-                <p>AeroLabs</p>
+                <div class="application-info">
+                    <h2>Product Designer Intern</h2>
+                    <p class="company-name">AeroClub</p>
 
-                <ul>
-                    <li>
-                        <img src="./assets/images/Icon-Lokasi.svg" alt="">
-                        Bandung
-                    </li>
-                    <li>
-                        <img src="./assets/images/Icon-ModelKerja.svg" alt="">
-                        On-site
-                    </li>
-                    <li>
-                        <img src="./assets/images/Icon-Durasi.svg" alt="">
-                        7 months
-                    </li>
-                </ul>
+                    <ul class="job-meta">
+                        <li>
+                            <img
+                                src="./assets/images/Icon-Lokasi.svg"
+                                alt=""
+                                width="22"
+                                height="22"
+                            >
+                            Bandung
+                        </li>
+                        <li>
+                            <img
+                                src="./assets/images/Icon-ModelKerja.svg"
+                                alt=""
+                                width="22"
+                                height="22"
+                            >
+                            On-site
+                        </li>
+                        <li>
+                            <img
+                                src="./assets/images/Icon-Durasi.svg"
+                                alt=""
+                                width="22"
+                                height="22"
+                            >
+                            7 months
+                        </li>
+                    </ul>
 
-                <p>Applied on 11 Oct 2026</p>
-                <p>Status: Interview</p>
+                    <p class="applied-date">
+                        Applied on 11 Oct 2026
+                    </p>
+                </div>
 
-                <p>
-                    <a href="internship-detail.html">View Details</a>
-                </p>
+                <div class="application-actions">
+                    <span class="status-badge status-interview">
+                        Interview
+                    </span>
+
+                    <a
+                        class="details-link"
+                        href="DetailLowongan.html"
+                    >
+                        View Details
+                    </a>
+                </div>
             </article>
-        </section>
-
-        <section id="in-review">
-            <h2>In Review</h2>
-            <p>UI/UX Design Intern - TechCo</p>
-        </section>
-
-        <section id="interview">
-            <h2>Interview</h2>
-            <p>Product Designer Intern - AeroLabs</p>
-        </section>
-
-        <section id="rejected">
-            <h2>Rejected</h2>
-            <p>No rejected applications.</p>
         </section>
     </main>
-
 </body>
 </html>

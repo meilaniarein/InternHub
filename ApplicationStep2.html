@@ -6,71 +6,603 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Lengkapi dokumen lamaran magang di InternHub.">
     <title>Application Details - InternHub</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            color: #111;
+            background: #f5f6f8;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .browser-bar {
+            height: 42px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 20px;
+            background: #e5eaf2;
+        }
+
+        .browser-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+
+        .red { background: #f16d70; }
+        .yellow { background: #ffc252; }
+        .green { background: #71c987; }
+
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid #dedede;
+        }
+
+        .topbar-inner {
+            max-width: 1440px;
+            min-height: 80px;
+            margin: 0 auto;
+            padding: 12px 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: #111;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .back-link img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .profile-link img {
+            display: block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .page {
+            max-width: 1440px;
+            min-height: calc(100vh - 122px);
+            margin: 0 auto;
+            padding: 56px 62px 40px;
+            background: #fff;
+        }
+
+        .progress {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            max-width: 900px;
+            margin: 0 auto 62px;
+        }
+
+        .progress-step {
+            position: relative;
+            text-align: center;
+            color: #a5a9ad;
+        }
+
+        .progress-step:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            z-index: 0;
+            top: 26px;
+            left: calc(50% + 30px);
+            width: calc(100% - 60px);
+            height: 3px;
+            background: #d9d9d9;
+        }
+
+        .step-number {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            color: #fff;
+            background: #9da1a4;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .progress-step.active {
+            color: #1760ff;
+        }
+
+        .progress-step.active .step-number {
+            background: #1760ff;
+        }
+
+        .step-label {
+            margin: 0;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .form-heading {
+            margin-bottom: 24px;
+        }
+
+        .form-heading h1 {
+            margin: 0 0 8px;
+            font-size: 32px;
+        }
+
+        .form-heading p {
+            margin: 0;
+            color: #858585;
+            font-size: 20px;
+        }
+
+        .form-field {
+            margin-bottom: 30px;
+        }
+
+        .form-field > label:first-child {
+            display: block;
+            margin-bottom: 16px;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .form-field input[type="url"],
+        .form-field textarea {
+            display: block;
+            width: 100%;
+            border: 2px solid #dedede;
+            border-radius: 10px;
+            background: #fff;
+            color: #222;
+            font: inherit;
+            font-size: 18px;
+        }
+
+        .form-field input[type="url"] {
+            height: 50px;
+            padding: 0 16px;
+        }
+
+        .form-field textarea {
+            min-height: 70px;
+            padding: 14px 16px;
+            resize: vertical;
+        }
+
+        .upload-input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+            white-space: nowrap;
+        }
+
+        .upload-area {
+            display: flex;
+            min-height: 115px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px;
+            border: 2px solid #dedede;
+            border-radius: 10px;
+            color: #858585;
+            text-align: center;
+            font-size: 16px;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: #1760ff;
+        }
+
+        .upload-area:focus-within {
+            outline: 2px solid #1760ff;
+        }
+
+        .upload-icon {
+            width: 32px;
+            height: 32px;
+            color: #111;
+        }
+
+        .upload-help {
+            margin: 8px 0 0;
+            color: #858585;
+            font-size: 14px;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: 2px solid #1760ff;
+            outline-offset: 2px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .continue-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            min-width: 286px;
+            min-height: 70px;
+            padding: 16px 28px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            background: #1760ff;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .continue-button:hover {
+            background: #084be0;
+        }
+
+        .arrow {
+            width: 14px;
+            height: 14px;
+            border-top: 2px solid #fff;
+            border-right: 2px solid #fff;
+            transform: rotate(45deg);
+        }
+
+        .form-message {
+            margin-top: 16px;
+            color: #b42318;
+            font-size: 15px;
+        }
+
+        @media (max-width: 800px) {
+            .topbar-inner {
+                padding: 12px 24px;
+            }
+
+            .page {
+                padding: 36px 24px;
+            }
+
+            .progress {
+                margin-bottom: 44px;
+            }
+
+            .step-number {
+                width: 48px;
+                height: 48px;
+                margin-bottom: 12px;
+                font-size: 20px;
+            }
+
+            .progress-step:not(:last-child)::after {
+                top: 22px;
+                left: calc(50% + 24px);
+                width: calc(100% - 48px);
+            }
+
+            .step-label {
+                font-size: 16px;
+            }
+
+            .form-field > label:first-child {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .topbar-inner {
+                padding: 12px 18px;
+            }
+
+            .page {
+                padding: 28px 18px;
+            }
+
+            .back-link {
+                font-size: 16px;
+            }
+
+            .profile-link img {
+                width: 42px;
+                height: 42px;
+            }
+
+            .progress {
+                margin-bottom: 38px;
+            }
+
+            .step-number {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 12px;
+                font-size: 17px;
+            }
+
+            .progress-step:not(:last-child)::after {
+                top: 18px;
+                left: calc(50% + 20px);
+                width: calc(100% - 40px);
+            }
+
+            .step-label {
+                font-size: 12px;
+            }
+
+            .form-heading h1 {
+                font-size: 26px;
+            }
+
+            .form-heading p {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+
+            .form-field > label:first-child {
+                margin-bottom: 10px;
+                font-size: 18px;
+            }
+
+            .upload-area {
+                font-size: 14px;
+            }
+
+            .continue-button {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <header>
-        <nav aria-label="Navigasi halaman">
-            <a href="ApplicationStep1.html">
-                <img src="./assets/images/Icon-Back.svg" alt="" width="24" height="24">
-                Back
+    <div class="browser-bar" aria-hidden="true">
+        <span class="browser-dot red"></span>
+        <span class="browser-dot yellow"></span>
+        <span class="browser-dot green"></span>
+    </div>
+
+    <header class="topbar">
+        <nav class="topbar-inner" aria-label="Navigasi halaman lamaran">
+            <a class="back-link" href="ApplicationStep1.html">
+                <img src="./assets/images/Icon-Back.svg" alt="">
+                <span>Back</span>
             </a>
 
-            <a href="profile.html" aria-label="Profil pengguna">
-                <img src="./assets/images/Gambar-FotoPersona.png" alt="Foto profil pengguna" width="48" height="48">
+            <a
+                class="profile-link"
+                href="Applications.html"
+                aria-label="Lihat aplikasi saya"
+            >
+                <img
+                    src="./assets/images/Gambar-FotoPersona.png"
+                    alt="Foto profil pengguna"
+                    width="50"
+                    height="50"
+                >
             </a>
         </nav>
     </header>
 
-    <main>
-        <section aria-label="Progress lamaran">
-            <div>
-                <img src="./assets/images/Icon-1.svg" alt="" width="48" height="48">
-                <p>Personal Information</p>
+    <main class="page">
+        <section class="progress" aria-label="Progress lamaran">
+            <div class="progress-step">
+                <div class="step-number">1</div>
+                <p class="step-label">Personal Information</p>
             </div>
-            <div aria-current="step">
-                <img src="./assets/images/Icon-2.svg" alt="" width="48" height="48">
-                <p><strong>Application Detail</strong></p>
+
+            <div class="progress-step active" aria-current="step">
+                <div class="step-number">2</div>
+                <p class="step-label">Application Detail</p>
             </div>
-            <div>
-                <img src="./assets/images/Icon-3.svg" alt="" width="48" height="48">
-                <p>Review &amp; Submit</p>
+
+            <div class="progress-step">
+                <div class="step-number">3</div>
+                <p class="step-label">Review &amp; Submit</p>
             </div>
         </section>
 
         <section aria-labelledby="details-title">
-            <h1 id="details-title">Application Details</h1>
-            <p>Lengkapi dokumen yang dibutuhkan.</p>
+            <div class="form-heading">
+                <h1 id="details-title">Application Details</h1>
+                <p>Lengkapi dokumen yang dibutuhkan.</p>
+            </div>
 
-            <form action="ApplicationReview.html" method="get">
-                <div>
-                    <label for="cv"><strong>CV / Resume</strong></label>
+            <form id="application-form">
+                <div class="form-field">
+                    <label for="cv">CV / Resume</label>
 
-                    <div>
-                        <label for="cv">
-                            <img src="./assets/images/Icon-DropFile.svg" alt="" width="32" height="32">
-                            <br>
-                            Drag and drop your file here or click to upload
-                            <br>
+                    <input
+                        class="upload-input"
+                        type="file"
+                        id="cv"
+                        name="cv"
+                        accept=".pdf,.doc,.docx"
+                        required
+                    >
+
+                    <label class="upload-area" for="cv">
+                        <svg
+                            class="upload-icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 32 32"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <rect x="5" y="3" width="19" height="23" rx="2"></rect>
+                            <path d="M10 9h9M10 14h6"></path>
+                            <path d="M19 19l9 4-4 2-2 4-3-10z"></path>
+                        </svg>
+
+                        <span id="upload-text">
+                            Drag and drop your file here or click to upload<br>
                             PDF, DOC, DOCX (Max 5 MB)
-                        </label>
+                        </span>
+                    </label>
 
-                        <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
-                    </div>
+                    <p class="upload-help">
+                        Format yang diterima: PDF, DOC, DOCX. Maksimal 5 MB.
+                    </p>
                 </div>
 
-                <p>
-                    <label for="portfolio"><strong>Portfolio</strong></label><br>
-                    <input type="url" id="portfolio" name="portfolio" placeholder="Masukkan link portofolio">
-                </p>
+                <div class="form-field">
+                    <label for="portfolio">Portfolio</label>
+                    <input
+                        type="url"
+                        id="portfolio"
+                        name="portfolio"
+                    >
+                </div>
 
-                <p>
-                    <label for="cover-letter"><strong>Cover Letter</strong></label><br>
-                    <textarea id="cover-letter" name="cover-letter" rows="4" cols="40" placeholder="Tuliskan cover letter kamu"></textarea>
-                </p>
+                <div class="form-field">
+                    <label for="cover-letter">Cover Letter</label>
+                    <textarea
+                        id="cover-letter"
+                        name="cover-letter"
+                        rows="2"
+                    ></textarea>
+                </div>
 
-                <button type="submit">Save &amp; Continue ›</button>
+                <div class="form-actions">
+                    <button class="continue-button" type="submit">
+                        <span>Save &amp; Continue</span>
+                        <span class="arrow" aria-hidden="true"></span>
+                    </button>
+                </div>
+
+                <p class="form-message" id="form-message" role="alert" hidden></p>
             </form>
         </section>
     </main>
+
+    <script>
+        const form = document.getElementById("application-form");
+        const cvInput = document.getElementById("cv");
+        const uploadText = document.getElementById("upload-text");
+        const message = document.getElementById("form-message");
+
+        const maxFileSize = 5 * 1024 * 1024;
+        const allowedExtensions = ["pdf", "doc", "docx"];
+
+        cvInput.addEventListener("change", function () {
+            message.hidden = true;
+
+            const file = cvInput.files[0];
+
+            if (!file) {
+                uploadText.innerHTML =
+                    "Drag and drop your file here or click to upload<br>" +
+                    "PDF, DOC, DOCX (Max 5 MB)";
+                return;
+            }
+
+            const extension = file.name.split(".").pop().toLowerCase();
+
+            if (!allowedExtensions.includes(extension)) {
+                cvInput.value = "";
+                uploadText.textContent =
+                    "Format file tidak didukung. Pilih PDF, DOC, atau DOCX.";
+                message.hidden = false;
+                message.textContent =
+                    "Silakan pilih CV dengan format PDF, DOC, atau DOCX.";
+                return;
+            }
+
+            if (file.size > maxFileSize) {
+                cvInput.value = "";
+                uploadText.textContent =
+                    "Ukuran file terlalu besar. Maksimal 5 MB.";
+                message.hidden = false;
+                message.textContent = "Ukuran CV harus maksimal 5 MB.";
+                return;
+            }
+
+            uploadText.textContent = "File dipilih: " + file.name;
+        });
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            message.hidden = true;
+
+            const file = cvInput.files[0];
+
+            if (!file) {
+                message.hidden = false;
+                message.textContent = "Silakan unggah CV / Resume terlebih dahulu.";
+                return;
+            }
+
+            const extension = file.name.split(".").pop().toLowerCase();
+
+            if (!allowedExtensions.includes(extension) || file.size > maxFileSize) {
+                message.hidden = false;
+                message.textContent =
+                    "Periksa kembali format dan ukuran CV. Maksimal 5 MB.";
+                return;
+            }
+
+            const details = {
+                cvName: file.name,
+                portfolio: document.getElementById("portfolio").value.trim(),
+                coverLetter: document.getElementById("cover-letter").value.trim()
+            };
+
+            try {
+                sessionStorage.setItem(
+                    "internhub-application-details",
+                    JSON.stringify(details)
+                );
+
+                window.location.href = "ApplicationReview.html";
+            } catch (error) {
+                message.hidden = false;
+                message.textContent =
+                    "Data tidak dapat disimpan. Silakan coba kembali.";
+            }
+        });
+
+        try {
+            const savedDetails = JSON.parse(
+                sessionStorage.getItem("internhub-application-details") || "null"
+            );
+
+            if (savedDetails) {
+                document.getElementById("portfolio").value =
+                    savedDetails.portfolio || "";
+
+                document.getElementById("cover-letter").value =
+                    savedDetails.coverLetter || "";
+            }
+        } catch (error) {
+            // Form tetap dapat digunakan jika data sebelumnya tidak tersedia.
+        }
+    </script>
 </body>
 </html>

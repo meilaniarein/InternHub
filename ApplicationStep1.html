@@ -4,99 +4,536 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Isi informasi pribadi untuk melamar magang di InternHub.">
+    <meta name="description" content="Isi informasi pribadi untuk melamar magang melalui InternHub.">
     <title>Personal Information - InternHub</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            color: #111;
+            background: #f5f6f8;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .browser-bar {
+            height: 42px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 20px;
+            background: #e5eaf2;
+        }
+
+        .browser-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+
+        .red { background: #f16d70; }
+        .yellow { background: #ffc252; }
+        .green { background: #71c987; }
+
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid #dedede;
+        }
+
+        .topbar-inner {
+            max-width: 1440px;
+            min-height: 80px;
+            margin: 0 auto;
+            padding: 12px 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: #111;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .back-link img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .profile-link img {
+            display: block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .page {
+            max-width: 1440px;
+            min-height: calc(100vh - 122px);
+            margin: 0 auto;
+            padding: 56px 62px 40px;
+            background: #fff;
+        }
+
+        .progress {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            max-width: 900px;
+            margin: 0 auto 62px;
+        }
+
+        .progress-step {
+            position: relative;
+            text-align: center;
+            color: #a5a9ad;
+        }
+
+        .progress-step:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            z-index: 0;
+            top: 26px;
+            left: calc(50% + 30px);
+            width: calc(100% - 60px);
+            height: 3px;
+            background: #d9d9d9;
+        }
+
+        .step-number {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            color: #fff;
+            background: #9da1a4;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .progress-step.active {
+            color: #1760ff;
+        }
+
+        .progress-step.active .step-number {
+            background: #1760ff;
+        }
+
+        .step-label {
+            margin: 0;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .form-heading {
+            margin-bottom: 34px;
+        }
+
+        .form-heading h1 {
+            margin: 0 0 8px;
+            font-size: 32px;
+        }
+
+        .form-heading p {
+            margin: 0;
+            color: #858585;
+            font-size: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: 94px;
+            row-gap: 44px;
+        }
+
+        .form-field {
+            min-width: 0;
+        }
+
+        .form-field label {
+            display: block;
+            margin-bottom: 16px;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .form-field input,
+        .form-field select {
+            width: 100%;
+            height: 50px;
+            padding: 0 16px;
+            border: 2px solid #dedede;
+            border-radius: 11px;
+            background: #fff;
+            color: #222;
+            font: inherit;
+            font-size: 19px;
+        }
+
+        .form-field input::placeholder {
+            color: #909090;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus {
+            outline: 2px solid #1760ff;
+            outline-offset: 2px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 70px;
+        }
+
+        .continue-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            min-width: 290px;
+            min-height: 70px;
+            padding: 16px 28px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            background: #1760ff;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .continue-button:hover {
+            background: #084be0;
+        }
+
+        .arrow {
+            width: 14px;
+            height: 14px;
+            border-top: 2px solid #fff;
+            border-right: 2px solid #fff;
+            transform: rotate(45deg);
+        }
+
+        .form-message {
+            margin-top: 18px;
+            color: #b42318;
+            font-size: 16px;
+        }
+
+        @media (max-width: 800px) {
+            .page {
+                padding: 36px 24px;
+            }
+
+            .topbar-inner {
+                padding: 12px 24px;
+            }
+
+            .progress {
+                margin-bottom: 44px;
+            }
+
+            .step-label {
+                font-size: 16px;
+            }
+
+            .step-number {
+                width: 48px;
+                height: 48px;
+                margin-bottom: 12px;
+                font-size: 20px;
+            }
+
+            .progress-step:not(:last-child)::after {
+                top: 22px;
+                left: calc(50% + 24px);
+                width: calc(100% - 48px);
+            }
+
+            .form-grid {
+                column-gap: 28px;
+            }
+
+            .form-field label {
+                font-size: 18px;
+            }
+
+            .form-field input,
+            .form-field select {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .page {
+                padding: 28px 18px;
+            }
+
+            .topbar-inner {
+                padding: 12px 18px;
+            }
+
+            .back-link {
+                font-size: 16px;
+            }
+
+            .profile-link img {
+                width: 42px;
+                height: 42px;
+            }
+
+            .progress {
+                margin-bottom: 38px;
+            }
+
+            .step-label {
+                font-size: 12px;
+            }
+
+            .step-number {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 12px;
+                font-size: 17px;
+            }
+
+            .progress-step:not(:last-child)::after {
+                top: 18px;
+                left: calc(50% + 20px);
+                width: calc(100% - 40px);
+            }
+
+            .form-heading h1 {
+                font-size: 26px;
+            }
+
+            .form-heading p {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+
+            .form-grid {
+                grid-template-columns: minmax(0, 1fr);
+                row-gap: 24px;
+            }
+
+            .form-field label {
+                margin-bottom: 10px;
+            }
+
+            .form-field input,
+            .form-field select {
+                height: 48px;
+            }
+
+            .form-actions {
+                margin-top: 36px;
+            }
+
+            .continue-button {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <header>
-        <nav aria-label="Navigasi halaman">
-            <a href="internship-detail.html">
-                <img src="./assets/images/Icon-Back.svg" alt="" width="24" height="24">
-                Back to Detail
+    <div class="browser-bar" aria-hidden="true">
+        <span class="browser-dot red"></span>
+        <span class="browser-dot yellow"></span>
+        <span class="browser-dot green"></span>
+    </div>
+
+    <header class="topbar">
+        <nav class="topbar-inner" aria-label="Navigasi halaman lamaran">
+            <a class="back-link" href="DetailLowongan.html">
+                <img src="./assets/images/Icon-Back.svg" alt="">
+                <span>Back to detail</span>
             </a>
 
-            <a href="profile.html" aria-label="Profil pengguna">
-                <img src="./assets/images/Gambar-FotoPersona.png" alt="Foto profil pengguna" width="48" height="48">
+            <a class="profile-link" href="Applications.html" aria-label="Lihat aplikasi saya">
+                <img
+                    src="./assets/images/Gambar-FotoPersona.png"
+                    alt="Foto profil pengguna"
+                    width="50"
+                    height="50"
+                >
             </a>
         </nav>
     </header>
 
-    <main>
-        <section aria-label="Progress lamaran">
-            <div>
-                <img src="./assets/images/Icon-1.svg" alt="" width="48" height="48">
-                <p><strong>Personal Information</strong></p>
+    <main class="page">
+        <section class="progress" aria-label="Progress lamaran">
+            <div class="progress-step active" aria-current="step">
+                <div class="step-number">1</div>
+                <p class="step-label">Personal Information</p>
             </div>
-            <div>
-                <img src="./assets/images/Icon-2.svg" alt="" width="48" height="48">
-                <p>Application Detail</p>
+
+            <div class="progress-step">
+                <div class="step-number">2</div>
+                <p class="step-label">Application Detail</p>
             </div>
-            <div>
-                <img src="./assets/images/Icon-3.svg" alt="" width="48" height="48">
-                <p>Review &amp; Submit</p>
+
+            <div class="progress-step">
+                <div class="step-number">3</div>
+                <p class="step-label">Review &amp; Submit</p>
             </div>
         </section>
 
         <section aria-labelledby="personal-title">
-            <h1 id="personal-title">Personal Information</h1>
-            <p>Isi data diri kamu untuk melanjutkan proses lamaran.</p>
+            <div class="form-heading">
+                <h1 id="personal-title">Personal Information</h1>
+                <p>Isi data diri kamu untuk melanjutkan proses lamaran.</p>
+            </div>
 
-            <form action="ApplicationStep2.html" method="get">
-                <p>
-                    <label for="full-name">Full Name</label><br>
-                    <input type="text" id="full-name" name="full-name" placeholder="Nama lengkap kamu" required>
-                </p>
+            <form id="personal-form">
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label for="full-name">Full Name</label>
+                        <input
+                            type="text"
+                            id="full-name"
+                            name="fullName"
+                            placeholder="Nama lengkap kamu"
+                            autocomplete="name"
+                            required
+                        >
+                    </div>
 
-                <p>
-                    <label for="email">Email</label><br>
-                    <input type="email" id="email" name="email" placeholder="email@domain.com" required>
-                </p>
+                    <div class="form-field">
+                        <label for="email">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="email@domain.com"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
 
-                <p>
-                    <label for="phone">Phone Number</label><br>
-                    <input type="tel" id="phone" name="phone" placeholder="08xxxxxxxxxx" required>
-                </p>
+                    <div class="form-field">
+                        <label for="phone">Phone Number</label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="081277364489"
+                            autocomplete="tel"
+                            required
+                        >
+                    </div>
 
-                <p>
-                    <label for="university">University</label><br>
-                    <select id="university" name="university" required>
-                        <option value="">Pilih universitas</option>
-                        <option value="Trisakti School of Management">Trisakti School of Management</option>
-                        <option value="Universitas Trisakti">Universitas Trisakti</option>
-                        <option value="BINUS University">BINUS University</option>
-                        <option value="Universitas Indonesia">Universitas Indonesia</option>
-                        <option value="Other">Lainnya</option>
-                    </select>
-                </p>
+                    <div class="form-field">
+                        <label for="university">University</label>
+                        <select id="university" name="university" required>
+                            <option value="">Pilih universitas</option>
+                            <option value="Trisakti School of Management">Trisakti School of Management</option>
+                            <option value="Universitas Trisakti">Universitas Trisakti</option>
+                            <option value="BINUS University">BINUS University</option>
+                            <option value="Universitas Indonesia">Universitas Indonesia</option>
+                            <option value="Other">Lainnya</option>
+                        </select>
+                    </div>
 
-                <p>
-                    <label for="major">Major</label><br>
-                    <select id="major" name="major" required>
-                        <option value="">Pilih jurusan</option>
-                        <option value="Management">Management</option>
-                        <option value="Digital Business">Digital Business</option>
-                        <option value="Information Systems">Information Systems</option>
-                        <option value="Computer Science">Computer Science</option>
-                        <option value="Design">Design</option>
-                        <option value="Other">Lainnya</option>
-                    </select>
-                </p>
+                    <div class="form-field">
+                        <label for="major">Major</label>
+                        <select id="major" name="major" required>
+                            <option value="">Pilih jurusan</option>
+                            <option value="Management">Management</option>
+                            <option value="Digital Business">Digital Business</option>
+                            <option value="Information Systems">Information Systems</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Design">Design</option>
+                            <option value="Other">Lainnya</option>
+                        </select>
+                    </div>
 
-                <p>
-                    <label for="graduation">Expected Graduation</label><br>
-                    <select id="graduation" name="graduation" required>
-                        <option value="">Pilih tahun</option>
-                        <option value="2026">2026</option>
-                        <option value="2027">2027</option>
-                        <option value="2028">2028</option>
-                        <option value="2029">2029</option>
-                        <option value="2030">2030</option>
-                    </select>
-                </p>
+                    <div class="form-field">
+                        <label for="graduation">Expected Graduation</label>
+                        <select id="graduation" name="graduation" required>
+                            <option value="">Pilih tahun</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                        </select>
+                    </div>
+                </div>
 
-                <button type="submit">Save &amp; Continue ›</button>
+                <div class="form-actions">
+                    <button class="continue-button" type="submit">
+                        <span>Save &amp; Continue</span>
+                        <span class="arrow" aria-hidden="true"></span>
+                    </button>
+                </div>
+
+                <p class="form-message" id="form-message" role="alert" hidden></p>
             </form>
         </section>
     </main>
+
+    <script>
+        const form = document.getElementById("personal-form");
+        const message = document.getElementById("form-message");
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            if (!form.reportValidity()) {
+                return;
+            }
+
+            const formData = new FormData(form);
+            const personalInfo = Object.fromEntries(formData.entries());
+
+            try {
+                sessionStorage.setItem(
+                    "internhub-personal-info",
+                    JSON.stringify(personalInfo)
+                );
+
+                window.location.href = "ApplicationStep2.html";
+            } catch (error) {
+                message.hidden = false;
+                message.textContent =
+                    "Data belum dapat disimpan. Periksa pengaturan penyimpanan browser kamu.";
+            }
+        });
+
+        // Mengisi kembali data jika pengguna kembali ke halaman ini.
+        try {
+            const savedInfo = JSON.parse(
+                sessionStorage.getItem("internhub-personal-info") || "null"
+            );
+
+            if (savedInfo) {
+                Object.entries(savedInfo).forEach(([key, value]) => {
+                    const field = form.elements.namedItem(key);
+
+                    if (field) {
+                        field.value = value;
+                    }
+                });
+            }
+        } catch (error) {
+            // Form tetap dapat digunakan jika data sebelumnya tidak tersedia.
+        }
+    </script>
 </body>
 </html>

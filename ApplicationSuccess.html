@@ -4,41 +4,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Konfirmasi keberhasilan pengiriman lamaran InternHub.">
+    <meta
+        name="description"
+        content="Konfirmasi status pengiriman lamaran InternHub."
+    >
     <title>Application Submitted - InternHub</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            color: #111;
+            background: #f5f6f8;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .browser-bar {
+            height: 42px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 20px;
+            background: #e5eaf2;
+        }
+
+        .browser-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+
+        .red {
+            background: #f16d70;
+        }
+
+        .yellow {
+            background: #ffc252;
+        }
+
+        .green {
+            background: #71c987;
+        }
+
+        .topbar {
+            background: #fff;
+            border-bottom: 1px solid #dedede;
+        }
+
+        .topbar-inner {
+            max-width: 1440px;
+            min-height: 80px;
+            margin: 0 auto;
+            padding: 12px 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: #111;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .back-link img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .profile-link img {
+            display: block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .page {
+            max-width: 1440px;
+            min-height: calc(100vh - 122px);
+            margin: 0 auto;
+            padding: 64px 24px;
+            background: #fff;
+        }
+
+        .success-content {
+            width: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+            padding-top: 12px;
+            text-align: center;
+        }
+
+        .success-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 28px;
+            border-radius: 50%;
+            background: #d2f1e2;
+        }
+
+        .success-icon svg {
+            width: 68px;
+            height: 68px;
+        }
+
+        .success-content h1 {
+            margin: 0 0 14px;
+            font-size: 28px;
+            line-height: 1.25;
+        }
+
+        .success-message {
+            max-width: 350px;
+            margin: 0 auto;
+            color: #858585;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .success-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+            margin-top: 70px;
+        }
+
+        .applications-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 240px;
+            min-height: 48px;
+            padding: 12px 20px;
+            border: 1px solid #1760ff;
+            border-radius: 4px;
+            color: #1760ff;
+            background: #eff5ff;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        .applications-button:hover {
+            background: #dce9ff;
+        }
+
+        .browse-link {
+            color: #1760ff;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        .browse-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .topbar-inner {
+                min-height: 64px;
+                padding: 10px 18px;
+            }
+
+            .back-link {
+                font-size: 16px;
+            }
+
+            .profile-link img {
+                width: 42px;
+                height: 42px;
+            }
+
+            .page {
+                min-height: calc(100vh - 106px);
+                padding: 54px 20px;
+            }
+
+            .success-icon {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 24px;
+            }
+
+            .success-icon svg {
+                width: 58px;
+                height: 58px;
+            }
+
+            .success-content h1 {
+                font-size: 24px;
+            }
+
+            .success-message {
+                font-size: 14px;
+            }
+
+            .success-actions {
+                margin-top: 48px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <header>
-        <nav aria-label="Navigasi halaman">
-            <a href="ApplicationReview.html">
-                <img src="./assets/images/Icon-Back.svg" alt="" width="24" height="24">
-                Back
+    <div class="browser-bar" aria-hidden="true">
+        <span class="browser-dot red"></span>
+        <span class="browser-dot yellow"></span>
+        <span class="browser-dot green"></span>
+    </div>
+
+    <header class="topbar">
+        <nav class="topbar-inner" aria-label="Navigasi halaman sukses">
+            <a class="back-link" href="ApplicationReview.html">
+                <img src="./assets/images/Icon-Back.svg" alt="">
+                <span>Back</span>
             </a>
 
-            <a href="profile.html" aria-label="Profil pengguna">
-                <img src="./assets/images/Gambar-FotoPersona.png" alt="Foto profil pengguna" width="48" height="48">
+            <a
+                class="profile-link"
+                href="Applications.html"
+                aria-label="Lihat aplikasi saya"
+            >
+                <img
+                    src="./assets/images/Gambar-FotoPersona.png"
+                    alt="Foto profil pengguna"
+                    width="50"
+                    height="50"
+                >
             </a>
         </nav>
     </header>
 
-    <main>
-        <section aria-labelledby="success-title">
-            <img src="./assets/images/Icon-Sukses.svg" alt="" width="120" height="120">
+    <main class="page">
+        <section class="success-content" aria-labelledby="success-title">
+            <div class="success-icon">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 64 64"
+                    fill="none"
+                    aria-hidden="true"
+                >
+                    <path
+                        d="M9 33L25 49L56 17"
+                        stroke="#087A32"
+                        stroke-width="4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </div>
 
             <h1 id="success-title">Application Submitted!</h1>
 
-            <p>
+            <p class="success-message">
                 Your application for UI/UX Design Intern at TechCo
                 has been successfully submitted.
             </p>
 
-            <p>
-                <a href="applications.html">View My Applications</a>
-            </p>
+            <div class="success-actions">
+                <a class="applications-button" href="Applications.html">
+                    View My Applications
+                </a>
 
-            <p>
-                <a href="FieldInternship.html">Back to Browse Internship</a>
-            </p>
+                <a class="browse-link" href="FieldInternship.html">
+                    Back to Browse Internship
+                </a>
+            </div>
         </section>
     </main>
 </body>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -6,11 +5,417 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Temukan peluang magang yang sesuai dengan minat dan karier impianmu melalui InternHub.">
     <title>InternHub - Find Your Next Internship</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #111111;
+            background: #ffffff;
+            line-height: 1.5;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        .navbar {
+            min-height: 80px;
+            padding: 16px 5.5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo img {
+            display: block;
+            width: 120px;
+            height: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 36px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-links a {
+            color: #777777;
+            font-size: 16px;
+        }
+
+        .nav-links a:hover {
+            color: #125bff;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 10px 18px;
+            border: 1px solid #d8d8d8;
+            border-radius: 7px;
+            background: #ffffff;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .button-primary {
+            color: #ffffff;
+            background: #125bff;
+            border-color: #125bff;
+        }
+
+        .button-primary:hover {
+            background: #0648dc;
+        }
+
+        .hero {
+            background: #edf5ff;
+            padding: 48px 5.5% 44px;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.85fr);
+            align-items: center;
+            gap: 38px;
+        }
+
+        .eyebrow {
+            margin: 0 0 24px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .hero h1 {
+            max-width: 760px;
+            margin: 0 0 22px;
+            font-size: clamp(42px, 5.7vw, 76px);
+            line-height: 1.05;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span {
+            color: #125bff;
+        }
+
+        .hero-description {
+            max-width: 650px;
+            margin: 0 0 30px;
+            font-size: 17px;
+            line-height: 1.5;
+        }
+
+        .search-form {
+            display: flex;
+            width: 100%;
+            max-width: 770px;
+            min-height: 58px;
+            margin-bottom: 24px;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid #a0a0a0;
+            border-radius: 9px;
+        }
+
+        .search-form label {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+            white-space: nowrap;
+        }
+
+        .search-form input {
+            flex: 1;
+            min-width: 0;
+            padding: 16px 18px;
+            border: 0;
+            outline: none;
+            font: inherit;
+            background: transparent;
+        }
+
+        .search-form input:focus {
+            box-shadow: inset 0 0 0 2px #125bff;
+        }
+
+        .search-button {
+            width: 68px;
+            flex-shrink: 0;
+            border: 0;
+            background: #125bff;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background: #0648dc;
+        }
+
+        .search-button img {
+            width: 27px;
+            height: 27px;
+            vertical-align: middle;
+        }
+
+        .popular-title {
+            margin: 0 0 12px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .popular-searches {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .popular-searches a {
+            display: inline-block;
+            padding: 9px 14px;
+            border: 1px solid #c4d9ff;
+            border-radius: 9px;
+            background: #e2edff;
+            color: #326dff;
+            font-size: 13px;
+            box-shadow: 0 2px 2px #125bff20;
+        }
+
+        .popular-searches a:hover {
+            background: #d0e1ff;
+        }
+
+        .hero-illustration {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-illustration img {
+            display: block;
+            width: 100%;
+            max-width: 490px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .benefits {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 5.5% 60px;
+        }
+
+        .benefits h2 {
+            margin: 0 0 24px;
+            font-size: 23px;
+            line-height: 1.3;
+        }
+
+        .benefit-list {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 24px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .benefit-card {
+            min-height: 105px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            border-radius: 11px;
+            background: #eaf2ff;
+            border-bottom: 2px solid #c7dcff;
+        }
+
+        .benefit-card img {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            object-fit: contain;
+        }
+
+        .benefit-card h3 {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.35;
+            font-weight: 600;
+        }
+
+        footer {
+            padding: 22px 5.5%;
+            text-align: center;
+            color: #777777;
+            border-top: 1px solid #eeeeee;
+            font-size: 13px;
+        }
+
+        /* Tablet */
+        @media (max-width: 1000px) {
+            .navbar {
+                flex-wrap: wrap;
+                gap: 18px;
+            }
+
+            .nav-links {
+                gap: 18px;
+            }
+
+            .hero-content {
+                grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr);
+                gap: 22px;
+            }
+
+            .benefit-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 16px;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 650px) {
+            .navbar {
+                padding: 16px 5%;
+                gap: 16px;
+            }
+
+            .logo img {
+                width: 105px;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: space-between;
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 13px;
+            }
+
+            .nav-actions {
+                width: 100%;
+            }
+
+            .nav-actions .button {
+                flex: 1;
+            }
+
+            .hero {
+                padding: 36px 5% 32px;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .eyebrow {
+                margin-bottom: 16px;
+                font-size: 13px;
+            }
+
+            .hero h1 {
+                margin-bottom: 18px;
+                font-size: clamp(39px, 10vw, 55px);
+                letter-spacing: -1.5px;
+            }
+
+            .hero-description {
+                margin-bottom: 24px;
+                font-size: 15px;
+            }
+
+            .search-form {
+                min-height: 52px;
+            }
+
+            .search-form input {
+                padding: 12px;
+                font-size: 13px;
+            }
+
+            .search-button {
+                width: 54px;
+            }
+
+            .popular-searches {
+                gap: 8px;
+            }
+
+            .popular-searches a {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+
+            .hero-illustration img {
+                max-width: 350px;
+            }
+
+            .benefits {
+                padding: 28px 5% 38px;
+            }
+
+            .benefits h2 {
+                font-size: 21px;
+            }
+
+            .benefit-list {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .benefit-card {
+                min-height: 88px;
+                padding: 18px;
+            }
+
+            .benefit-card h3 {
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
+
 <body>
     <header>
-        <nav aria-label="Navigasi utama">
-            <a href="Branda.html" aria-label="InternHub Home">
+        <nav class="navbar" aria-label="Navigasi utama">
+            <a class="logo" href="Branda.html" aria-label="InternHub Home">
                 <img
                     src="./assets/images/Icon-InternHub.svg"
                     alt="InternHub"
@@ -18,148 +423,159 @@
                 >
             </a>
 
-            <ul>
-                <li><a href="internships.html">Field Internship</a></li>
-                <li><a href="saved.html">Saved</a></li>
-                <li><a href="applications.html">Application</a></li>
-                <li><a href="resources.html">Resources</a></li>
+            <ul class="nav-links">
+                <li><a href="FieldInternship.html">Field Internship</a></li>
+                <li><a href="Saved.html">Saved</a></li>
+                <li><a href="Applications.html">Applications</a></li>
+                <li><a href="Resources.html">Resources</a></li>
             </ul>
 
-            <div>
-                <a href="sign-in.html">Sign In</a>
-                <a href="internships.html">Get Started</a>
+            <div class="nav-actions">
+                <a class="button button-primary" href="FieldInternship.html">
+                    Get Started
+                </a>
             </div>
         </nav>
     </header>
 
     <main>
-        <section aria-labelledby="hero-title">
-            <div>
-                <p>YOUR NEXT STEP STARTS HERE</p>
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <div>
+                    <p class="eyebrow">YOUR NEXT STEP STARTS HERE</p>
 
-                <h1 id="hero-title">
-                    Find Your Next Internship
-                </h1>
+                    <h1 id="hero-title">
+                        Find Your Next <span>Internship</span>
+                    </h1>
 
-                <p>
-                    Temukan kesempatan magang yang sesuai dengan minat
-                    dan karier impianmu. Semua informasi lengkap dalam
-                    satu tempat.
-                </p>
+                    <p class="hero-description">
+                        Temukan kesempatan magang yang sesuai dengan minat
+                        dan karier impianmu. Semua informasi lengkap dalam
+                        satu tempat.
+                    </p>
 
-                <form action="internships.html" method="get">
-                    <label for="search">
-                        Search internship
-                    </label>
-
-                    <input
-                        type="search"
-                        id="search"
-                        name="keyword"
-                        placeholder="Search position, company, or keyword..."
+                    <form
+                        class="search-form"
+                        action="FieldInternship.html"
+                        method="get"
                     >
+                        <label for="search">Search internship</label>
 
-                    <button type="submit" aria-label="Search internship">
-                        <img
-                            src="./assets/images/Icon-Search.svg"
-                            alt=""
-                            width="24"
-                            height="24"
+                        <input
+                            type="search"
+                            id="search"
+                            name="keyword"
+                            placeholder="Search position, company, or keyword..."
                         >
-                    </button>
-                </form>
 
-                <section aria-labelledby="popular-title">
-                    <h2 id="popular-title">Popular Searches</h2>
+                        <button
+                            class="search-button"
+                            type="submit"
+                            aria-label="Search internship"
+                        >
+                            <img
+                                src="./assets/images/Icon-Search.svg"
+                                alt=""
+                                width="24"
+                                height="24"
+                            >
+                        </button>
+                    </form>
 
-                    <ul>
-                        <li>
-                            <a href="internships.html?keyword=UI%2FUX">
-                                UI/UX Designer
-                            </a>
-                        </li>
-                        <li>
-                            <a href="internships.html?keyword=Marketing">
-                                Marketing
-                            </a>
-                        </li>
-                        <li>
-                            <a href="internships.html?keyword=Business%20Analyst">
-                                Business Analyst
-                            </a>
-                        </li>
-                        <li>
-                            <a href="internships.html?keyword=Product%20Management">
-                                Product Management
-                            </a>
-                        </li>
-                        <li>
-                            <a href="internships.html?keyword=Data%20Analyst">
-                                Data Analyst
-                            </a>
-                        </li>
-                    </ul>
-                </section>
+                    <section aria-labelledby="popular-title">
+                        <h2 class="popular-title" id="popular-title">
+                            Popular Searches
+                        </h2>
+
+                        <ul class="popular-searches">
+                            <li>
+                                <a href="FieldInternship.html?keyword=UI%2FUX%20Designer">
+                                    UI/UX Designer
+                                </a>
+                            </li>
+                            <li>
+                                <a href="FieldInternship.html?keyword=Marketing">
+                                    Marketing
+                                </a>
+                            </li>
+                            <li>
+                                <a href="FieldInternship.html?keyword=Business%20Analyst">
+                                    Business Analyst
+                                </a>
+                            </li>
+                            <li>
+                                <a href="FieldInternship.html?keyword=Product%20Management">
+                                    Product Management
+                                </a>
+                            </li>
+                            <li>
+                                <a href="FieldInternship.html?keyword=Data%20Analyst">
+                                    Data Analyst
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+
+                <figure class="hero-illustration">
+                    <img
+                        src="./assets/images/Gambar-AnimasiBranda.png"
+                        alt="Ilustrasi mahasiswa menggunakan laptop untuk mencari peluang magang"
+                        width="480"
+                    >
+                </figure>
             </div>
-
-            <figure>
-                <img
-                    src="./assets/images/Gambar-AnimasiBranda.png"
-                    alt="Ilustrasi mahasiswa sedang menggunakan laptop untuk mencari peluang magang"
-                    width="480"
-                >
-            </figure>
         </section>
 
-        <section aria-labelledby="benefits-title">
+        <section class="benefits" aria-labelledby="benefits-title">
             <h2 id="benefits-title">Why InternHub?</h2>
 
-            <ul>
+            <ul class="benefit-list">
                 <li>
-                    <article>
+                    <article class="benefit-card">
                         <img
                             src="./assets/images/Icon-Verified.svg"
                             alt=""
-                            width="32"
-                            height="32"
+                            width="36"
+                            height="36"
                         >
                         <h3>Verified &amp; Active Internship Listings</h3>
                     </article>
                 </li>
 
                 <li>
-                    <article>
+                    <article class="benefit-card">
                         <img
                             src="./assets/images/Icon-ChooseFilter.svg"
                             alt=""
-                            width="32"
-                            height="32"
+                            width="36"
+                            height="36"
                         >
                         <h3>Easy to Use Filters</h3>
                     </article>
                 </li>
 
                 <li>
-                    <article>
+                    <article class="benefit-card">
                         <img
                             src="./assets/images/Icon-Calendar.svg"
                             alt=""
-                            width="32"
-                            height="32"
+                            width="36"
+                            height="36"
                         >
                         <h3>Detailed Information</h3>
                     </article>
                 </li>
 
                 <li>
-                    <article>
+                    <article class="benefit-card">
                         <img
                             src="./assets/images/Icon-Heart.svg"
                             alt=""
-                            width="32"
-                            height="32"
+                            width="36"
+                            height="36"
                         >
-                        <h3>Apply Directly on InternHub</h3>
+                        <h3>Organize Your Internship Journey</h3>
                     </article>
                 </li>
             </ul>
@@ -171,3 +587,4 @@
     </footer>
 </body>
 </html>
+```
