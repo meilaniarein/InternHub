@@ -115,7 +115,7 @@ Testing results should reflect the behavior observed in the current version of t
 
 ## 12. Live Website
 
-**Live URL:** To be added after deployment.
+**Live URL:** cute-hummingbird-70ec10.netlify.app 
 
 The deployed website should be tested through its public URL to verify page navigation, internship data display, search and filtering, and form behavior.
 
