@@ -166,15 +166,43 @@
 
         .save-button {
             flex-shrink: 0;
-            padding: 0;
-            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 46px;
+            padding: 4px;
+            border: 0;
+            border-radius: 6px;
             background: transparent;
+            color: #171717;
+            cursor: pointer;
         }
 
-        .save-button img {
+        .save-button:hover {
+            background: #f2f4f7;
+        }
+
+        .save-button:focus-visible {
+            outline: 2px solid #1760ff;
+            outline-offset: 3px;
+        }
+
+        .save-button svg {
             display: block;
             width: 30px;
             height: 36px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            pointer-events: none;
+        }
+
+        .save-button[aria-pressed="true"] svg {
+            fill: #171717;
+            stroke: #171717;
         }
 
         .job-meta {
@@ -499,12 +527,9 @@
                                     aria-label="Simpan lowongan TechCo"
                                     aria-pressed="false"
                                 >
-                                    <img
-                                        src="./assets/images/Icon-SaveInternship.svg"
-                                        alt=""
-                                        width="30"
-                                        height="36"
-                                    >
+                                    <svg viewBox="0 0 30 36" aria-hidden="true" focusable="false">
+                                        <path d="M4 3.5H26V33L15 25.5L4 33Z"></path>
+                                    </svg>
                                 </button>
                             </div>
 
@@ -667,13 +692,18 @@
 
             saveButton.addEventListener("click", () => {
                 const savedIds = getSavedIds();
-                const updatedIds = savedIds.includes(internshipId)
+                const isCurrentlySaved = savedIds.includes(internshipId);
+                const updatedIds = isCurrentlySaved
                     ? savedIds.filter(id => id !== internshipId)
                     : [...savedIds, internshipId];
 
                 try {
                     localStorage.setItem(storageKey, JSON.stringify(updatedIds));
                     updateSaveButton();
+                    saveNotice.textContent = isCurrentlySaved
+                        ? "Lowongan dihapus dari Saved."
+                        : "Lowongan berhasil disimpan.";
+                    saveNotice.classList.add("visible");
                 } catch (error) {
                     saveNotice.textContent =
                         "Lowongan tidak dapat disimpan di browser ini.";

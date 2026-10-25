@@ -616,23 +616,56 @@
         document
             .getElementById("submit-application")
             .addEventListener("click", function () {
-                const message = document.getElementById("submit-message");
+                const button = document.getElementById("submit-application");
 
                 try {
-                    sessionStorage.setItem(
-                        "internhub-application-status",
-                        "Simulasi lamaran telah dikirim"
-                    );
+                    const personal = personalData || {};
+                    const details = applicationDetails || {};
 
-                    message.textContent =
-                        "Ini hanya simulasi. Belum ada lamaran yang dikirim ke perusahaan.";
+                    // Simpan satu lamaran simulasi agar dapat dibaca halaman Success
+                    // dan ditampilkan pada halaman Applications.
+                    const application = {
+                        id: "app-" + Date.now(),
+                        position: "UI/UX Designer",
+                        title: "UI/UX Design Intern",
+                        company: "TechCo",
+                        location: "Jakarta",
+                        workType: "Hybrid",
+                        duration: "3-6 months",
+                        status: "Submitted",
+                        submittedAt: new Date().toISOString(),
+                        fullName: personal.fullName || personal.name || "",
+                        email: personal.email || "",
+                        phone: personal.phone || "",
+                        university: personal.university || "",
+                        major: personal.major || "",
+                        graduation: personal.graduation || personal.expectedGraduation || "",
+                        cvName: details.cvName || "",
+                        portfolio: details.portfolio || "",
+                        coverLetter: details.coverLetter || ""
+                    };
 
-                    message.hidden = false;
+                    const saved = JSON.parse(localStorage.getItem("internhub-applications") || "[]");
+                    const applications = Array.isArray(saved) ? saved : [];
+                    applications.unshift(application);
+
+                    localStorage.setItem("internhub-applications", JSON.stringify(applications));
+                    sessionStorage.setItem("internhub-last-application", JSON.stringify(application));
+                    sessionStorage.setItem("internhub-application-status", "success");
+
+                    window.location.href = "ApplicationSuccess.html";
                 } catch (error) {
-                    message.textContent =
-                        "Status simulasi tidak dapat disimpan di browser ini.";
+                    // Halaman error tetap dapat dibuka walaupun penyimpanan gagal.
+                    try {
+                        sessionStorage.setItem(
+                            "internhub-application-error",
+                            "Data lamaran tidak dapat disimpan di browser. Silakan coba kembali."
+                        );
+                    } catch (storageError) {
+                        // Jika sessionStorage juga tidak tersedia, halaman error tetap dibuka.
+                    }
 
-                    message.hidden = false;
+                    window.location.href = "ApplicationError.html";
                 }
             });
     </script>

@@ -68,6 +68,13 @@
             height: auto;
         }
 
+        .brand-fallback {
+            color: #1749a8;
+            font-size: 22px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
         .nav-links {
             display: flex;
             align-items: center;
@@ -370,13 +377,20 @@
             cursor: pointer;
         }
 
-        .save-button img {
+        .save-button .save-icon {
+            display: block;
             width: 24px;
             height: 24px;
+            transition: fill 0.15s ease, stroke 0.15s ease;
+        }
+
+        .save-button[aria-pressed="true"] .save-icon {
+            fill: #171717;
+            stroke: #171717;
         }
 
         .save-button[aria-pressed="true"] {
-            background: #edf4ff;
+            background: white;
             border-radius: 5px;
         }
 
@@ -394,6 +408,32 @@
             background: #fafafa;
             border: 1px dashed #ccc;
             border-radius: 8px;
+        }
+
+
+        .toast {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            z-index: 1000;
+            max-width: min(360px, calc(100vw - 32px));
+            padding: 14px 18px;
+            color: #fff;
+            background: #1749a8;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,.18);
+        }
+        .toast[hidden] { display: none; }
+        .skeleton-card {
+            min-height: 150px;
+            border-radius: 6px;
+            background: linear-gradient(90deg, #f0f1f4 25%, #e4e7ed 37%, #f0f1f4 63%);
+            background-size: 400% 100%;
+            animation: skeleton-shimmer 1.4s ease infinite;
+        }
+        @keyframes skeleton-shimmer {
+            0% { background-position: 100% 0; }
+            100% { background-position: 0 0; }
         }
 
         .site-footer {
@@ -512,7 +552,9 @@
     <header class="site-header">
         <nav class="nav" aria-label="Navigasi utama">
             <a class="brand" href="Branda.html" aria-label="InternHub Home">
-                <img src="./assets/images/Icon-InternHub.svg" alt="InternHub" width="120">
+                <img src="./assets/images/Icon-InternHub.svg" alt="InternHub" width="120"
+                     onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
+                <span class="brand-fallback" hidden>▰ InternHub</span>
             </a>
 
             <ul class="nav-links">
@@ -656,7 +698,7 @@
             </form>
 
             <div class="results-toolbar">
-                <p class="results-count" id="results-count" aria-live="polite">2 internships found</p>
+                <p class="results-count" id="results-count" aria-live="polite">12 internships found</p>
 
                 <form class="sort-form" id="sort-form">
                     <label for="sort">Sort by</label>
@@ -669,81 +711,11 @@
                 </form>
             </div>
 
-            <div class="job-list" id="job-list">
-                <article class="job-card"
-                    data-id="techco-uiux"
-                    data-position="UI/UX Designer"
-                    data-company="TechCo"
-                    data-location="Jakarta"
-                    data-work-type="Hybrid"
-                    data-duration="3-6"
-                    data-status="Open"
-                    data-deadline="2026-10-30"
-                    data-keywords="ui ux design designer internship">
-
-                    <img class="company-logo" src="./assets/images/Gambar-TechCo.png" alt="Logo TechCo" width="150">
-
-                    <div class="job-main">
-                        <h2>UI/UX Design Intern</h2>
-                        <p class="company-name">TechCo</p>
-
-                        <ul class="job-meta">
-                            <li><img src="./assets/images/Icon-Lokasi.svg" alt=""> Jakarta</li>
-                            <li><img src="./assets/images/Icon-ModelKerja.svg" alt=""> Hybrid</li>
-                            <li><img src="./assets/images/Icon-Durasi.svg" alt=""> 3–6 months</li>
-                        </ul>
-
-                        <div class="job-bottom">
-                            <span class="status">Open</span>
-                            <p class="deadline">Deadline 30 Oct 2026</p>
-                        </div>
-                    </div>
-
-                    <div class="job-actions">
-                        <button class="save-button" type="button" data-save="techco-uiux" aria-label="Simpan lowongan TechCo" aria-pressed="false">
-                            <img src="./assets/images/Icon-SaveInternship.svg" alt="" width="24" height="24">
-                        </button>
-                        <a class="button details-link" href="DetailLowongan.html">View Details</a>
-                    </div>
-                </article>
-
-                <article class="job-card"
-                    data-id="aerolabs-uiux"
-                    data-position="UI/UX Designer"
-                    data-company="AeroLabs"
-                    data-location="Jakarta"
-                    data-work-type="Hybrid"
-                    data-duration="3-6"
-                    data-status="Open"
-                    data-deadline="2026-11-30"
-                    data-keywords="ui ux design designer product internship">
-
-                    <img class="company-logo" src="./assets/images/Gambar-AeroLabs.png" alt="Logo AeroLabs" width="150">
-
-                    <div class="job-main">
-                        <h2>UI/UX Design Intern</h2>
-                        <p class="company-name">AeroLabs</p>
-
-                        <ul class="job-meta">
-                            <li><img src="./assets/images/Icon-Lokasi.svg" alt=""> Jakarta</li>
-                            <li><img src="./assets/images/Icon-ModelKerja.svg" alt=""> Hybrid</li>
-                            <li><img src="./assets/images/Icon-Durasi.svg" alt=""> 3–6 months</li>
-                        </ul>
-
-                        <div class="job-bottom">
-                            <span class="status">Open</span>
-                            <p class="deadline">Deadline 30 Nov 2026</p>
-                        </div>
-                    </div>
-
-                    <div class="job-actions">
-                        <button class="save-button" type="button" data-save="aerolabs-uiux" aria-label="Simpan lowongan AeroLabs" aria-pressed="false">
-                            <img src="./assets/images/Icon-SaveInternship.svg" alt="" width="24" height="24">
-                        </button>
-                        <a class="button details-link" href="DetailLowongan.html">View Details</a>
-                    </div>
-                </article>
+            <div class="job-list" id="job-list" aria-live="polite" aria-busy="true">
+                <div class="skeleton-card" aria-hidden="true"></div>
+                <div class="skeleton-card" aria-hidden="true"></div>
             </div>
+            <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
             <p id="empty-state" class="empty-state" hidden>
                 Tidak ada lowongan yang cocok. Coba ubah kata kunci atau filter.
@@ -757,7 +729,8 @@
 
     <script>
         (() => {
-            const cards = Array.from(document.querySelectorAll(".job-card"));
+            "use strict";
+
             const jobList = document.getElementById("job-list");
             const filterForm = document.getElementById("filter-form");
             const searchForm = document.getElementById("search-form");
@@ -767,14 +740,110 @@
             const sortSelect = document.getElementById("sort");
             const count = document.getElementById("results-count");
             const emptyState = document.getElementById("empty-state");
+            const toast = document.getElementById("toast");
+            let toastTimer;
+            function showToast(message) {
+                toast.textContent = message;
+                toast.hidden = false;
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => { toast.hidden = true; }, 2600);
+            }
             const storageKey = "internhub-saved-internships";
+            let internships = [];
 
             function getSavedIds() {
                 try {
-                    return JSON.parse(localStorage.getItem(storageKey) || "[]");
+                    const value = JSON.parse(localStorage.getItem(storageKey) || "[]");
+                    return Array.isArray(value) ? value : [];
                 } catch (error) {
+                    console.error("Tidak dapat membaca daftar Saved:", error);
                     return [];
                 }
+            }
+
+            function checkedValues(name) {
+                return Array.from(
+                    filterForm.querySelectorAll('input[name="' + name + '"]:checked')
+                ).map(input => input.value);
+            }
+
+            function escapeHTML(value) {
+                return String(value ?? "").replace(/[&<>"']/g, character => ({
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    '"': "&quot;",
+                    "'": "&#39;"
+                })[character]);
+            }
+
+            function formatDuration(duration) {
+                if (duration === "less-than-3") return "Less than 3 months";
+                if (duration === "3-6") return "3–6 months";
+                if (duration === "more-than-6") return "More than 6 months";
+                return duration || "Not specified";
+            }
+
+            function formatDate(dateString) {
+                if (!dateString) return "Deadline not specified";
+                const date = new Date(dateString + "T00:00:00");
+                if (Number.isNaN(date.getTime())) return "Deadline not specified";
+                return "Deadline " + date.toLocaleDateString("en-GB", {
+                    day: "2-digit", month: "short", year: "numeric"
+                });
+            }
+
+            function createCard(internship) {
+                const card = document.createElement("article");
+                card.className = "job-card";
+                card.dataset.id = internship.id;
+                card.dataset.position = internship.position || "";
+                card.dataset.company = internship.company || "";
+                card.dataset.location = internship.location || "";
+                card.dataset.workType = internship.workType || "";
+                card.dataset.duration = internship.duration || "";
+                card.dataset.status = internship.status || "";
+                card.dataset.deadline = internship.deadline || "";
+                card.dataset.keywords = internship.keywords || "";
+
+                const saved = getSavedIds().includes(internship.id);
+                const logo = internship.logo || "./assets/images/Icon-InternHub.svg";
+                const detailPage = internship.detailPage || "DetailLowongan.html";
+
+                card.innerHTML = `
+                    <img class="company-logo" src="${escapeHTML(logo)}" alt="Logo ${escapeHTML(internship.company || "perusahaan")}" width="150" loading="lazy">
+                    <div class="job-main">
+                        <h2>${escapeHTML(internship.title || internship.position || "Internship")}</h2>
+                        <p class="company-name">${escapeHTML(internship.company || "Company not specified")}</p>
+                        <ul class="job-meta">
+                            <li><img src="./assets/images/Icon-Lokasi.svg" alt=""> ${escapeHTML(internship.location || "Location not specified")}</li>
+                            <li><img src="./assets/images/Icon-ModelKerja.svg" alt=""> ${escapeHTML(internship.workType || "Not specified")}</li>
+                            <li><img src="./assets/images/Icon-Durasi.svg" alt=""> ${escapeHTML(formatDuration(internship.duration))}</li>
+                        </ul>
+                        <div class="job-bottom">
+                            <span class="status">${escapeHTML(internship.status || "Status not specified")}</span>
+                            <p class="deadline">${escapeHTML(formatDate(internship.deadline))}</p>
+                        </div>
+                    </div>
+                    <div class="job-actions">
+                        <button class="save-button" type="button" data-save="${escapeHTML(internship.id)}" aria-label="${saved ? "Hapus dari Saved" : "Simpan lowongan"}: ${escapeHTML(internship.company || internship.title || "internship")}" aria-pressed="${saved}">
+                            <svg class="save-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="${saved ? "#171717" : "none"}" stroke="#171717" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M6 3.75h12a1 1 0 0 1 1 1v16l-7-4.5-7 4.5v-16a1 1 0 0 1 1-1z" />
+                            </svg>
+                        </button>
+                        <a class="button details-link" href="${escapeHTML(detailPage)}?id=${encodeURIComponent(internship.id)}">View Details</a>
+                    </div>`;
+
+                const logoImage = card.querySelector(".company-logo");
+                logoImage.addEventListener("error", () => {
+                    logoImage.src = "./assets/images/Icon-InternHub.svg";
+                }, { once: true });
+                return card;
+            }
+
+            function renderCards() {
+                jobList.replaceChildren(...internships.map(createCard));
+                jobList.setAttribute("aria-busy", "false");
             }
 
             function updateSaveButtons() {
@@ -787,101 +856,137 @@
                         "aria-label",
                         (saved ? "Hapus dari Saved: " : "Simpan lowongan: ") + button.dataset.save
                     );
+
+                    const icon = button.querySelector(".save-icon");
+                    if (icon) {
+                        icon.setAttribute("fill", saved ? "#171717" : "none");
+                        icon.setAttribute("stroke", "#171717");
+                    }
                 });
             }
 
-            function checkedValues(name) {
-                return Array.from(
-                    filterForm.querySelectorAll('input[name="' + name + '"]:checked')
-                ).map(input => input.value);
+            function normalizeSearch(value) {
+                return String(value ?? "")
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .toLocaleLowerCase("id")
+                    // UI/UX, UI UX, UIUX, dan UX/UI diperlakukan konsisten.
+                    .replace(/u\s*i\s*\/?\s*u\s*x/g, "uiux")
+                    .replace(/u\s*x\s*\/?\s*u\s*i/g, "uiux")
+                    .replace(/[^a-z0-9]+/g, " ")
+                    .trim()
+                    .replace(/\s+/g, " ");
             }
 
             function applyFilters() {
-                const keyword = keywordInput.value.trim().toLowerCase();
+                const rawKeyword = keywordInput.value.trim();
+                const keyword = normalizeSearch(rawKeyword);
                 const positions = checkedValues("position");
                 const workTypes = checkedValues("workType");
                 const statuses = checkedValues("status");
                 const location = locationSelect.value;
                 const duration = durationSelect.value;
 
-                let visibleCards = cards.filter(card => {
-                    const searchable = [
-                        card.dataset.position,
-                        card.dataset.company,
-                        card.dataset.location,
-                        card.dataset.workType,
-                        card.dataset.status,
-                        card.dataset.keywords
-                    ].join(" ").toLowerCase();
+                function relevanceScore(item) {
+                    if (!keyword) return 0;
+                    const position = normalizeSearch(item.position);
+                    const title = normalizeSearch(item.title);
+                    const company = normalizeSearch(item.company);
+                    const keywords = normalizeSearch(item.keywords);
+                    if (position === keyword || title === keyword) return 0;
+                    if (position.startsWith(keyword) || title.startsWith(keyword)) return 1;
+                    if (position.includes(keyword) || title.includes(keyword)) return 2;
+                    if (keywords.split(" ").some(word => word === keyword)) return 3;
+                    if (keywords.includes(keyword)) return 4;
+                    if (company.includes(keyword)) return 5;
+                    return 6;
+                }
 
-                    const matchesKeyword = !keyword || searchable.includes(keyword);
-                    const matchesPosition = positions.length === 0 || positions.includes(card.dataset.position);
-                    const matchesLocation = !location || card.dataset.location === location;
-                    const matchesWorkType = workTypes.length === 0 || workTypes.includes(card.dataset.workType);
-                    const matchesDuration = !duration || card.dataset.duration === duration;
-                    const matchesStatus = statuses.length === 0 || statuses.includes(card.dataset.status);
+                let filtered = internships.filter(item => {
+                    const positionText = normalizeSearch(item.position);
+                    const titleText = normalizeSearch(item.title);
+                    const companyText = normalizeSearch(item.company);
+                    const otherText = normalizeSearch([
+                        item.location, item.workType, item.status, item.keywords
+                    ].join(" "));
+                    const searchable = [positionText, titleText, companyText, otherText].join(" ");
 
-                    return matchesKeyword &&
-                        matchesPosition &&
-                        matchesLocation &&
-                        matchesWorkType &&
-                        matchesDuration &&
-                        matchesStatus;
+                    // Prioritaskan kecocokan posisi/judul. Kalau tidak ada, cari di seluruh data.
+                    const titleMatchExists = keyword && internships.some(candidate =>
+                        normalizeSearch([candidate.position, candidate.title].join(" ")).includes(keyword)
+                    );
+                    const matchesKeyword = !keyword || (
+                        titleMatchExists
+                            ? (positionText + " " + titleText).includes(keyword)
+                            : searchable.includes(keyword)
+                    );
+
+                    const matchesPosition = positions.length === 0 ||
+                        positions.some(value => normalizeSearch(value) === positionText);
+                    const matchesLocation = !location || normalizeSearch(item.location) === normalizeSearch(location);
+                    const matchesWorkType = workTypes.length === 0 ||
+                        workTypes.some(value => normalizeSearch(value) === normalizeSearch(item.workType));
+                    const matchesDuration = !duration || item.duration === duration;
+                    const matchesStatus = statuses.length === 0 ||
+                        statuses.some(value => normalizeSearch(value) === normalizeSearch(item.status));
+
+                    return matchesKeyword && matchesPosition && matchesLocation &&
+                        matchesWorkType && matchesDuration && matchesStatus;
                 });
 
                 if (sortSelect.value === "deadline") {
-                    visibleCards.sort((a, b) =>
-                        new Date(a.dataset.deadline) - new Date(b.dataset.deadline)
+                    filtered.sort((a, b) =>
+                        new Date(a.deadline || "9999-12-31") - new Date(b.deadline || "9999-12-31")
                     );
                 } else if (sortSelect.value === "newest") {
-                    visibleCards.sort((a, b) =>
-                        new Date(b.dataset.deadline) - new Date(a.dataset.deadline)
+                    filtered.sort((a, b) =>
+                        new Date(b.deadline || "1970-01-01") - new Date(a.deadline || "1970-01-01")
+                    );
+                } else {
+                    // Most Relevant: posisi/judul yang cocok harus muncul paling atas.
+                    filtered.sort((a, b) =>
+                        relevanceScore(a) - relevanceScore(b) ||
+                        internships.indexOf(a) - internships.indexOf(b)
                     );
                 }
 
-                cards.forEach(card => {
-                    card.hidden = !visibleCards.includes(card);
-                });
-
-                visibleCards.forEach(card => jobList.appendChild(card));
-
-                count.textContent = visibleCards.length +
-                    (visibleCards.length === 1 ? " internship found" : " internships found");
-
-                emptyState.hidden = visibleCards.length > 0;
-                jobList.hidden = visibleCards.length === 0;
+                // Rebuild urutan DOM dari data hasil filter. Tidak sekadar menyembunyikan kartu,
+                // sehingga urutan kartu di layar selalu sama dengan urutan hasil pencarian.
+                jobList.replaceChildren(...filtered.map(createCard));
+                jobList.hidden = filtered.length === 0;
+                count.textContent = filtered.length + (
+                    filtered.length === 1 ? " internship found" : " internships found"
+                );
+                emptyState.hidden = filtered.length > 0;
 
                 const params = new URLSearchParams();
-
-                if (keywordInput.value.trim()) {
-                    params.set("keyword", keywordInput.value.trim());
-                }
-
+                if (rawKeyword) params.set("keyword", rawKeyword);
                 positions.forEach(value => params.append("position", value));
-
-                if (location) {
-                    params.set("location", location);
-                }
-
+                if (location) params.set("location", location);
                 workTypes.forEach(value => params.append("workType", value));
-
-                if (duration) {
-                    params.set("duration", duration);
-                }
-
+                if (duration) params.set("duration", duration);
                 statuses.forEach(value => params.append("status", value));
-
-                if (sortSelect.value !== "relevant") {
-                    params.set("sort", sortSelect.value);
-                }
-
-                const query = params.toString();
-
+                if (sortSelect.value !== "relevant") params.set("sort", sortSelect.value);
                 history.replaceState(
                     null,
                     "",
-                    window.location.pathname + (query ? "?" + query : "")
+                    window.location.pathname + (params.toString() ? "?" + params.toString() : "")
                 );
+            }
+
+            function restoreFiltersFromURL() {
+                const params = new URLSearchParams(window.location.search);
+                keywordInput.value = params.get("keyword") || "";
+                ["position", "workType", "status"].forEach(name => {
+                    params.getAll(name).forEach(value => {
+                        const input = Array.from(filterForm.querySelectorAll('input[name="' + name + '"]'))
+                            .find(item => item.value === value);
+                        if (input) input.checked = true;
+                    });
+                });
+                locationSelect.value = params.get("location") || "";
+                durationSelect.value = params.get("duration") || "";
+                sortSelect.value = params.get("sort") || "relevant";
             }
 
             searchForm.addEventListener("submit", event => {
@@ -889,11 +994,14 @@
                 applyFilters();
             });
 
+            // Hasil ikut berubah saat user mengetik, tanpa harus menekan tombol Search.
+            keywordInput.addEventListener("input", () => {
+                applyFilters();
+            });
             filterForm.addEventListener("submit", event => {
                 event.preventDefault();
                 applyFilters();
             });
-
             filterForm.addEventListener("reset", () => {
                 setTimeout(() => {
                     keywordInput.value = "";
@@ -901,68 +1009,63 @@
                     applyFilters();
                 }, 0);
             });
-
             document.getElementById("sort-form").addEventListener("submit", event => {
                 event.preventDefault();
                 applyFilters();
             });
-
             document.getElementById("reset-all").addEventListener("click", () => {
                 filterForm.reset();
                 keywordInput.value = "";
                 sortSelect.value = "relevant";
                 setTimeout(applyFilters, 0);
             });
+            jobList.addEventListener("click", event => {
+                const button = event.target.closest("[data-save]");
+                if (!button) return;
+                const id = button.dataset.save;
+                const savedIds = getSavedIds();
+                const updatedIds = savedIds.includes(id) ? savedIds.filter(savedId => savedId !== id) : [...savedIds, id];
+                localStorage.setItem(storageKey, JSON.stringify(updatedIds));
+                updateSaveButtons();
+                showToast(updatedIds.includes(id) ? "Lowongan berhasil disimpan." : "Lowongan dihapus dari Saved.");
+            });
 
-            document.querySelectorAll("[data-save]").forEach(button => {
-                button.addEventListener("click", () => {
-                    const id = button.dataset.save;
-                    const savedIds = getSavedIds();
-
-                    const updatedIds = savedIds.includes(id)
-                        ? savedIds.filter(savedId => savedId !== id)
-                        : [...savedIds, id];
-
-                    localStorage.setItem(storageKey, JSON.stringify(updatedIds));
+            async function loadInternships() {
+                try {
+                    const response = await fetch("./data/internships.json?v=" + Date.now(), { cache: "no-store" });
+                    if (!response.ok) throw new Error("HTTP " + response.status);
+                    const data = await response.json();
+                    if (!Array.isArray(data)) throw new Error("Format JSON harus berupa array");
+                    internships = data.filter(item => item && item.id).map(item => ({
+                        ...item,
+                        id: String(item.id),
+                        position: item.position || "",
+                        title: item.title || item.position || "Internship",
+                        company: item.company || "Company not specified",
+                        location: item.location || "",
+                        workType: item.workType || "",
+                        duration: item.duration || "",
+                        status: item.status || "Open",
+                        deadline: item.deadline || "",
+                        keywords: item.keywords || "",
+                        logo: item.logo || "./assets/images/Icon-InternHub.svg",
+                        detailPage: item.detailPage || "DetailLowongan.html"
+                    }));
+                    renderCards();
+                    restoreFiltersFromURL();
                     updateSaveButtons();
-                });
-            });
+                    applyFilters();
+                } catch (error) {
+                    console.error("Gagal memuat data internships.json:", error);
+                    jobList.setAttribute("aria-busy", "false");
+                    jobList.hidden = true;
+                    count.textContent = "Data lowongan gagal dimuat";
+                    emptyState.hidden = false;
+                    emptyState.textContent = "Data lowongan belum dapat dimuat. Pastikan file data/internships.json tersedia dan buka proyek melalui Live Server, bukan langsung melalui file://.";
+                }
+            }
 
-            const params = new URLSearchParams(window.location.search);
-            keywordInput.value = params.get("keyword") || "";
-
-            params.getAll("position").forEach(value => {
-                const input = Array.from(
-                    filterForm.querySelectorAll('input[name="position"]')
-                ).find(item => item.value === value);
-
-                if (input) input.checked = true;
-            });
-
-            locationSelect.value = params.get("location") || "";
-
-            params.getAll("workType").forEach(value => {
-                const input = Array.from(
-                    filterForm.querySelectorAll('input[name="workType"]')
-                ).find(item => item.value === value);
-
-                if (input) input.checked = true;
-            });
-
-            durationSelect.value = params.get("duration") || "";
-
-            params.getAll("status").forEach(value => {
-                const input = Array.from(
-                    filterForm.querySelectorAll('input[name="status"]')
-                ).find(item => item.value === value);
-
-                if (input) input.checked = true;
-            });
-
-            sortSelect.value = params.get("sort") || "relevant";
-
-            updateSaveButtons();
-            applyFilters();
+            loadInternships();
         })();
     </script>
 </body>
