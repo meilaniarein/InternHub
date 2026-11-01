@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -547,107 +546,6 @@
                 flex-direction: row;
             }
         }
-
-        /* ===== Perbaikan usability: informasi kartu lowongan lebih mudah dipindai ===== */
-        .job-card {
-            grid-template-columns: 140px minmax(0, 1fr) auto;
-            align-items: start;
-            gap: 22px;
-            padding: 22px;
-            border: 1px solid #d9e0eb;
-            border-radius: 10px;
-            transition: box-shadow .2s ease, border-color .2s ease;
-        }
-        .job-card:hover {
-            border-color: #b8cafa;
-            box-shadow: 0 5px 18px rgba(23, 73, 168, .07);
-        }
-        .company-logo {
-            width: 140px;
-            height: 112px;
-            padding: 8px;
-            border: 1px solid #edf0f5;
-            border-radius: 8px;
-            background: #f8faff;
-        }
-        .job-main h2 { margin-bottom: 6px; line-height: 1.35; }
-        .company-name { margin-bottom: 16px; font-size: 15px; }
-        .job-meta {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 12px;
-            margin: 0 0 16px;
-            color: #333;
-        }
-        .job-meta li {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 5px;
-            min-width: 0;
-            padding: 9px 10px;
-            background: #f7f9fc;
-            border: 1px solid #edf0f5;
-            border-radius: 7px;
-        }
-        .job-meta img { display: none; }
-        .meta-label {
-            color: #777;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: .35px;
-        }
-        .meta-value {
-            color: #242424;
-            font-size: 13px;
-            font-weight: 600;
-            line-height: 1.4;
-            overflow-wrap: anywhere;
-        }
-        .job-bottom {
-            align-items: center;
-            gap: 10px 16px;
-        }
-        .status {
-            display: inline-flex;
-            align-items: center;
-            padding: 7px 12px;
-            color: #08783d;
-            background: #e2f7eb;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-        .status-closing {
-            color: #9a5700;
-            background: #fff1d6;
-        }
-        .status-default {
-            color: #555;
-            background: #edf0f4;
-        }
-        .deadline { color: #555; font-size: 13px; }
-        .deadline strong { color: #333; }
-        .job-actions { min-width: 112px; }
-        .details-link { padding: 10px 13px; border-radius: 7px; font-size: 13px; }
-
-        @media (max-width: 900px) {
-            .job-card { grid-template-columns: 100px minmax(0, 1fr); gap: 14px; }
-            .company-logo { width: 100px; height: 90px; }
-            .job-actions { grid-column: 2; flex-direction: row; align-items: center; }
-            .job-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        }
-        @media (max-width: 620px) {
-            .job-card { grid-template-columns: 72px minmax(0, 1fr); gap: 12px; padding: 13px; }
-            .company-logo { width: 72px; height: 72px; }
-            .job-main h2 { font-size: 16px; }
-            .company-name { font-size: 14px; margin-bottom: 12px; }
-            .job-meta { grid-template-columns: 1fr; gap: 7px; font-size: 13px; }
-            .job-meta li { padding: 7px 9px; }
-            .job-actions { grid-column: 1 / -1; justify-content: flex-end; }
-        }
-        /* ===== Akhir perbaikan kartu lowongan ===== */
     </style>
 </head>
 
@@ -918,26 +816,20 @@
                 const saved = getSavedIds().includes(internship.id);
                 const logo = internship.logo || "./assets/images/Icon-InternHub.svg";
                 const detailPage = internship.detailPage || "DetailLowongan.html";
-                const statusText = internship.status || "Status not specified";
-                const statusNormalized = String(statusText).toLowerCase();
-                const statusClass = statusNormalized.includes("closing")
-                    ? "status-closing"
-                    : statusNormalized === "open" ? "status-open" : "status-default";
-                const deadlineText = formatDate(internship.deadline).replace(/^Deadline\s*/, "");
 
                 card.innerHTML = `
-                    <img class="company-logo" src="${escapeHTML(logo)}" alt="Logo ${escapeHTML(internship.company || "perusahaan")}" width="140" loading="lazy">
+                    <img class="company-logo" src="${escapeHTML(logo)}" alt="Logo ${escapeHTML(internship.company || "perusahaan")}" width="150" loading="lazy">
                     <div class="job-main">
                         <h2>${escapeHTML(internship.title || internship.position || "Internship")}</h2>
                         <p class="company-name">${escapeHTML(internship.company || "Company not specified")}</p>
-                        <ul class="job-meta" aria-label="Informasi lowongan">
-                            <li><span class="meta-label">Lokasi</span><span class="meta-value">${escapeHTML(internship.location || "Belum ditentukan")}</span></li>
-                            <li><span class="meta-label">Sistem Kerja</span><span class="meta-value">${escapeHTML(internship.workType || "Belum ditentukan")}</span></li>
-                            <li><span class="meta-label">Durasi Magang</span><span class="meta-value">${escapeHTML(formatDuration(internship.duration))}</span></li>
+                        <ul class="job-meta">
+                            <li><img src="./assets/images/Icon-Lokasi.svg" alt=""> ${escapeHTML(internship.location || "Location not specified")}</li>
+                            <li><img src="./assets/images/Icon-ModelKerja.svg" alt=""> ${escapeHTML(internship.workType || "Not specified")}</li>
+                            <li><img src="./assets/images/Icon-Durasi.svg" alt=""> ${escapeHTML(formatDuration(internship.duration))}</li>
                         </ul>
                         <div class="job-bottom">
-                            <span class="status ${statusClass}">${escapeHTML(statusText)}</span>
-                            <p class="deadline"><strong>Deadline:</strong> ${escapeHTML(deadlineText)}</p>
+                            <span class="status">${escapeHTML(internship.status || "Status not specified")}</span>
+                            <p class="deadline">${escapeHTML(formatDate(internship.deadline))}</p>
                         </div>
                     </div>
                     <div class="job-actions">
