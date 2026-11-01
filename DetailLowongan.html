@@ -244,6 +244,7 @@
             margin: 0;
             color: #858585;
             font-size: 18px;
+            font-weight: 600;
         }
 
         .apply-button {
@@ -270,6 +271,97 @@
             padding: 0 0 7px;
             border-bottom: 3px solid #858585;
             font-size: 25px;
+        }
+
+        /* AFTER: information hierarchy for faster scanning */
+        .quick-info {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin: 28px 0 34px;
+        }
+
+        .quick-info-item {
+            min-width: 0;
+            padding: 18px 16px;
+            border: 1px solid #e1e5eb;
+            border-radius: 10px;
+            background: #f8faff;
+        }
+
+        .quick-info-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .quick-info-value {
+            display: block;
+            color: #202938;
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.35;
+            overflow-wrap: anywhere;
+        }
+
+        .content-section {
+            margin-top: 26px;
+        }
+
+        .content-section h2 {
+            margin-bottom: 14px;
+        }
+
+        .content-section h3 {
+            margin: 0 0 10px;
+        }
+
+        .content-section p,
+        .content-section li {
+            line-height: 1.55;
+        }
+
+        .content-section ul {
+            padding-left: 24px;
+        }
+
+        .content-section li + li {
+            margin-top: 8px;
+        }
+
+        .detail-subsection {
+            padding: 18px 20px;
+            margin-top: 14px;
+            border-left: 4px solid #1760ff;
+            border-radius: 0 8px 8px 0;
+            background: #f7f9fc;
+        }
+
+        .detail-subsection ul {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 900px) {
+            .quick-info {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .quick-info {
+                gap: 10px;
+                margin: 22px 0 28px;
+            }
+
+            .quick-info-item {
+                padding: 14px 12px;
+            }
+
+            .quick-info-value {
+                font-size: 15px;
+            }
         }
 
         .content-section {
@@ -567,28 +659,59 @@
                         Apply Now
                     </a>
 
-                    <h2 class="overview-heading" id="overview">Overview</h2>
+                    <h2 class="overview-heading" id="overview">Internship Overview</h2>
 
-                    <section class="content-section">
-                        <h2>Job Description</h2>
+                    <section class="quick-info" aria-label="Informasi utama lowongan">
+                        <div class="quick-info-item">
+                            <span class="quick-info-label">Position</span>
+                            <span class="quick-info-value">UI/UX Design Intern</span>
+                        </div>
+                        <div class="quick-info-item">
+                            <span class="quick-info-label">Company</span>
+                            <span class="quick-info-value">TechCo</span>
+                        </div>
+                        <div class="quick-info-item">
+                            <span class="quick-info-label">Location</span>
+                            <span class="quick-info-value">Jakarta</span>
+                        </div>
+                        <div class="quick-info-item">
+                            <span class="quick-info-label">Work System</span>
+                            <span class="quick-info-value">Hybrid</span>
+                        </div>
+                        <div class="quick-info-item">
+                            <span class="quick-info-label">Duration</span>
+                            <span class="quick-info-value">3–6 months</span>
+                        </div>
+                        <div class="quick-info-item">
+                            <span class="quick-info-label">Application Deadline</span>
+                            <span class="quick-info-value">30 Oct 2026</span>
+                        </div>
+                    </section>
+
+                    <section class="content-section" aria-labelledby="job-description-title">
+                        <h2 id="job-description-title">Job Description</h2>
                         <p>
                             Sebagai UI/UX Design Intern, kamu akan bekerja langsung
                             dengan tim product untuk menciptakan pengalaman digital
                             yang user-friendly. Kamu akan membantu dalam riset
-                            pengguna, pembuatan wireframe, prototyping
+                            pengguna, pembuatan wireframe, dan prototyping.
                         </p>
 
-                        <h3>Responsibilities</h3>
-                        <ul>
-                            <li>Membuat wireframe, user flow, prototype, dan UI design.</li>
-                            <li>Melakukan user research dan usability testing.</li>
-                        </ul>
+                        <div class="detail-subsection">
+                            <h3>Responsibilities</h3>
+                            <ul>
+                                <li>Membuat wireframe, user flow, prototype, dan UI design.</li>
+                                <li>Melakukan user research dan usability testing.</li>
+                            </ul>
+                        </div>
 
-                        <h3>Requirements</h3>
-                        <ul>
-                            <li>Mahasiswa/fresh graduate jurusan terkait IT, Bisnis atau Design</li>
-                            <li>Menguasai Figma dan dasar-dasar UI/UX</li>
-                        </ul>
+                        <div class="detail-subsection">
+                            <h3>Requirements</h3>
+                            <ul>
+                                <li>Mahasiswa/fresh graduate jurusan terkait IT, Bisnis atau Design.</li>
+                                <li>Menguasai Figma dan dasar-dasar UI/UX.</li>
+                            </ul>
+                        </div>
                     </section>
 
                     <p class="save-notice" id="save-notice" role="status" aria-live="polite"></p>
